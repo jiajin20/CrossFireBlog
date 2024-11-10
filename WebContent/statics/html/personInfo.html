@@ -99,9 +99,15 @@
                                 <!-- 密码修改表单 -->
                                 <li>
                                     <el-form ref="form" :model="form" :rules="rules" label-width="160px">
-                                        <el-form-item label="账号" prop="account" disabled>
-                                            <el-input v-model="form.account" type="text" placeholder="请输入账号"></el-input>
+                                        <el-form-item label="账号" prop="account">
+                                            <el-input
+                                                    v-model="form.account"
+                                                    :readonly="true"
+                                                    type="text"
+                                                    :placeholder="person.account">
+                                            </el-input>
                                         </el-form-item>
+
 
 
 
@@ -278,7 +284,7 @@
                         checkPassword: ''
                     },
                     rules: {
-                        oldPassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
+
                         password: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
                         checkPassword: [
                             { required: true, message: '请确认新密码', trigger: 'blur' },
@@ -302,7 +308,7 @@
                     }
                 });
                 this.initUser();
-          
+
 
 
             },
@@ -386,22 +392,22 @@
 
                 // 提交密码修改表单
                 onSubmit(form) {
+                    this.form.account = this.person.account;
                     this.$refs[form].validate((valid) => {
                         if (valid) {
                             request.post('/updatePassword', this.form, (res) => {
-                                if (res.success) {
-                                    this.$message.success('密码修改成功');
-                                    window.sessionStorage.removeItem('token');
-                                    window.location = '/login'; // 重定向到登录页面
-                                } else {
-                                    this.$message.error('密码修改失败');
-                                }
+
+                                this.$message.success('密码修改成功');
+                                window.sessionStorage.removeItem('token');
+                                window.location = '/login'; // 重定向到登录页面
+                                this.$message.success('密码修改成功');
                             });
                         } else {
                             this.$message.error("修改失败，请检查输入的密码！");
                         }
                     });
                 },
+
 
                 // 更新用户信息
                 update(data) {
