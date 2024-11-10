@@ -18,7 +18,9 @@
     <context:component-scan base-package="cn.gzy"/>
     <!--    <mvc:annotation-driven/>-->
     <mvc:resources mapping="/statics/**" location="/statics/"/>
+    <mvc:resources mapping="/guanwang/**" location="/guanwang/"/>
     <mvc:resources mapping="/login.html" location="/login"/>
+    <mvc:resources mapping="/index1.html" location="/index1.html"/>
 
     <!-- 在Spring MVC配置文件中配置Jackson -->
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">

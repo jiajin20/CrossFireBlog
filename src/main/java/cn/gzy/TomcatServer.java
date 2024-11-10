@@ -35,12 +35,12 @@ public class TomcatServer {
 
     // 服务连接
     tomcat.getService().addConnector(connector);
-    String url = "http://localhost:" + port + path + "login.html";
-    log.info("web: {}", "http://localhost:" + port + path + "login.html");
+    String url = "http://localhost:" + port + path + "index1.html";
+    log.info("web: {}", "http://localhost:" + port + path + "guanwang/index1.html");
 
     // 打开浏览器
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-      Desktop.getDesktop().browse(new URI("http://localhost:" + port + path + "login"));
+      Desktop.getDesktop().browse(new URI("http://localhost:" + port + path + "guanwang/index1.html"));
     } else {
       log.warn("无法打开浏览器，请手动访问: {}", url);
     }
