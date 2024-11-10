@@ -32,7 +32,7 @@ public class publicController {
   }
 
 
-  @GetMapping({"/blog/*","/index","/personInfo/*","/person/*","/users/*","/login"})
+  @GetMapping({"/blog/*","/index","/personInfo/*","/person/*","/users/*","/login","/LoginReg"})
   public String common(HttpServletRequest req){
     System.out.println(pre + req.getRequestURI() + suf);
     // 去掉restful的参数，直接访问html文件
