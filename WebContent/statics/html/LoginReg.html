@@ -13,7 +13,7 @@
     <meta charset="utf-8" />
     <title>注册</title>
     <link rel="stylesheet" href="/statics/css/reg.css">
-    <script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/statics/js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
 
 <body>
 
@@ -87,7 +87,7 @@
 
             // 构建用户数据对象
             const userData = {
-                account: username,
+                account: userid ,
                 email: email,
                 nickname: nickname,
                 password: password
@@ -101,7 +101,7 @@
                 data: JSON.stringify(userData),
                 success: function (response) {
                     alert("注册成功"); // 注册成功提示
-                    window.location.href = 'login.html'; // 跳转到登录页面
+                    window.location.href = '/login'; // 跳转到登录页面
                 },
                 error: function (xhr) {
                     alert(xhr.responseJSON.message); // 显示错误消息
