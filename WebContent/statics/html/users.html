@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>更多</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/statics/css/global.css">
+    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/users.css">
+    <!-- <link rel="stylesheet" href="/statics/css/home-style.css"> -->
+    <link rel="stylesheet" href="/statics/css/friendlink.css">
+    <link rel="stylesheet" href="/statics/css/tab.css">
+    <link rel="stylesheet" href="/statics/css/myPagination.css">
+    <style>
+        /* 使页面高度为100%，容器使用flex布局 */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #app {
+            flex-grow: 1;
+            /* 使内容部分占据剩余空间 */
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            /* 默认位置，保持在底部 */
+        }
+
+        .footer-line {
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar-holder" id="nav">
+            <div class="nav-bar" id="nav-bar">
+                <div class="logo-box">
+                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;" alt="logo"
+                            src="/statics/images/logo.png" /></a>
+                </div>
+                <div class="nb-a-holder" id="home"><a   class="nb-a ta-c" href="http://localhost:8080/index">首页</a></div>
+                <div class="nb-a-holder"><a class="nb-a ta-c" href="/statics/html/category.html">分类</a></div>
+                <div class="nb-a-holder">
+                    <a :href="'/personInfo/' + (personInfo.userId || '')" class="nb-a ta-c">个人信息</a>
+                </div>
+    
+                <div class="nb-a-holder-last">
+                    <div class="nb-a-holder-small">
+                        <a class="a-login" @click="logout" style="cursor: pointer;">注销</a>
+                    </div>
+                </div>
+    
+            </div>
+        </nav>
+
+        <div id="app" style="display: flex;justify-content: center;overflow: hidden; ">
+
+            <div class="friendcardbg column-container"
+                style="width: 80%;height: 80%;display: grid; grid-template-rows: repeat(4,1fr);">
+                <li class="person-intro-detail gradient-text" style="height: 60px;">
+                    <h1>{{head}}</h1>
+                </li>
+                <div class="friendlinks-container">
+                    <div class="friendlinks-card" class='user' :span="4" v-for="user in users" :key="user.userId"
+                        @click="userDetail(user.userId)">
+                        <div class="avatar">
+                            <a href="#">
+                                <img alt="" loading="lazy" decoding="async" :src="user.avatar">
+                                <i v-if="user.isMutual" class="el-icon-connection"></i>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a class="friendname" target="_blank" href="#">{{user.nickname}}</a>
+                            <p class="frienddescription">未来可期</p>
+                            <i class="el-icon-error" @click="delAttention(user.userId)"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <footer class="footer">
+            <div class="footer-line">Powered By Cross Fire • © 2024</div>
+        </footer>
+    </div>
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+    <script src="/statics/js/request.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    title: '',
+                    head: '',
+                    users: [],
+                    search: '',
+                    pageParam: {
+                        current: 1,
+                        size: 24
+                    },
+                    totalNumber: 0
+                }
+            },
+            created() {
+                this.initAttention()
+            },
+            methods: {
+                async initAttention() {
+                    let urlArr = window.location.pathname.split("/");
+                    let key = urlArr[urlArr.length - 1]
+                    this.head = key === 'followers' ? "我关注的人" : "关注我的人"
+                    switch (key) {
+                        case "followers":
+                            await request.post("/followersOfPage", this.pageParam, { key: this.search }, res => {
+                                this.pageParam.size = res.size
+                                this.pageParam.current = res.current
+                                this.totalNumber = res.totalNumber
+                                this.users = res.list
+                            })
+                            break;
+                        case "followed":
+                            await request.post("/followedsOfPage", this.pageParam, { key: this.search }, res => {
+                                this.pageParam.size = res.size
+                                this.pageParam.current = res.current
+                                this.totalNumber = res.totalNumber
+                                this.users = res.list
+                            })
+                            break;
+                    }
+                },
+                handleSizeChange(val) { // 每页val条
+                    this.pageParam.size = val
+                    switch (this.head) {
+                        case "followers":
+                            request.post("/followersOfPage", this.pageParam, { key: this.search }, res => {
+                                this.pageParam.size = res.size
+                                this.pageParam.current = res.current
+                                this.totalNumber = res.totalNumber
+                                this.users = res.list
+                            })
+                            break;
+                        case "followeds":
+                            request.post("/followedsOfPage", this.pageParam, { key: this.search }, res => {
+                                this.pageParam.size = res.size
+                                this.pageParam.current = res.current
+                                this.totalNumber = res.totalNumber
+                                this.users = res.list
+                            })
+                            break;
+                    }
+                },
+                handleCurrentChange(val) {
+                    this.pageParam.current = val
+                    switch (this.head) {
+                        case "followers":
+                            request.post("/followersOfPage", this.pageParam, { key: this.search }, res => {
+                                this.users = res
+                            })
+                            break;
+                        case "followeds":
+                            request.post("/followedsOfPage", this.pageParam, { key: this.search }, res => {
+                                this.users = res
+                            })
+                            break;
+                    }
+                },
+                delAttention(id) {
+                    let type = 1
+                    if (this.head == "followeds") {
+                        type = 0
+                    }
+                    request.post("/delAttention", { type: type, id: id }, res => {
+                        if (res) {
+                            this.initAttention()
+                        }
+                    })
+                },
+                userDetail(id) {
+                    console.log(id);
+                    window.location = "/personInfo/" + id;
+                },
+            }
+        })
+    </script>
+
+<script>
+    new Vue({
+        el: 'nav',
+        data() {
+            return {
+                personInfo: { name: '', avatar: '/statics/images/18908.png' },
+            }
+        },
+        created() {
+            this.initUser()
+        },
+        methods: {
+            logout() {
+                window.sessionStorage.removeItem('token')
+                //document.cookie = `token=${res.token}; expires=${ data.getDate() -10 }`
+                let date = new Date()
+                date.setDate(date.getDate() - 1)
+                document.cookie = `token=""; expires=${date.toUTCString()}`
+                window.location = "/login"
+            },
+            toPersonInfo() {
+                if (this.personInfo.userId) {
+                    window.location = '/personInfo/' + this.personInfo.userId;
+                } else {
+                    console.error('User ID not available!');
+                }
+            },
+            async initUser() {
+                await request.post("/personalInfomation", (res) => {
+                    this.personInfo = res;
+                });
+            },
+        }
+    })
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+@import 'public.css';
+
+.el-main {
+    padding: 45px 10%;
+}
+
+.el-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.info-item {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    /* border-bottom: #3498db 1px solid; */
+}
+
+.info-item div {
+    margin: 0 ;
+    text-align: center;
+}
+.el-input__inner{
+    font-size: 10px;
+}
+
+.info-item > div:first-child {
+    flex: 0.2;
+    font-weight: bold;
+    text-align: left;
+    color: #34495e;
+    font-size: 25px;
+}
+.info-item > div:nth-child(2){
+    flex: 0.6;
+    cursor:default;
+    font: 16px;
+}
+
+.info-item > div :last-child:hover {
+    flex: 0.2;
+    transition: transform 2s; 
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+
+
+.el-input {
+    width: 80%;
+}
+
+.el-button {
+    margin-left: 10px;
+}
+
+.el-footer {
+    background-color: #e7eaec;
+    text-align: center;
+    padding: 20px;
+}
+
+.avatar-uploader {
+    border: 2px dashed #3498db;
+    width: 32px;
+    height:32px;
+    border-radius: 20%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    
+}
+.el-upload{
+height: 32px;width: 32px;
+}
+
+.infoA{
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+}
+

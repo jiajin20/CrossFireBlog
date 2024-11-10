@@ -1,0 +1,80 @@
+body {
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  .loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    font-size: 24px;
+    /* color: #007bff; */
+    z-index: 1000;
+  }
+#app {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.top {
+    height: 80px;
+    display: flex;
+}
+.el-header {
+    top: -20px;
+}
+.el-header h2 {
+    margin-left: 25px;
+    text-align: center;
+    color: #333;
+    font-weight: 600;
+}
+.el-main {
+    padding-top: 50px;
+    margin-right: 10px;
+}
+.el-button {
+    width: 100%;
+    border-radius: 8px;
+    font-weight: bold;
+}
+.el-input__inner {
+    border-radius: 8px;
+}
+.el-input__inner:focus {
+    border-color: #4e54c8;!important;
+    box-shadow: 0 0 5px rgba(78, 84, 200, 0.5);
+}
+.el-button:hover {
+    background-color: #3f51b5;!important;
+}
+/* Responsive styling */
+@media (max-width: 500px) {
+    #app {
+        max-width: 90%;
+        padding: 20px;
+    }
+}

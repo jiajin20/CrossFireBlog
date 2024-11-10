@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/statics/css/global.css">
+    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/myPagination.css">
+    <link rel="stylesheet" href="/statics/css/personInfo.css">
+    <style>
+        body {
+            overflow: hidden;
+            animation: gradient 10s ease infinite;
+            background-size: 400% 400%;
+            background-image: linear-gradient(to right, #6ba7d1, #40b2d6, #00bbd0, #00c4c0, #00caa6, #3dc787, #61c265, #80bb42, #9bab1e, #b39800, #c68400, #d56c15);
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar-holder" id="nav">
+            <div class="nav-bar" id="nav-bar">
+                <div class="logo-box">
+                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;" alt="logo"
+                            src="/statics/images/logo.png" /></a>
+                </div>
+                <div class="nb-a-holder" id="home"><a class="nb-a ta-c" href="http://localhost:8080/index">首页</a></div>
+                <div class="nb-a-holder"><a class="nb-a ta-c" href="/statics/html/category.html">分类</a></div>
+                <div class="nb-a-holder">
+                    <a  class="nb-a ta-c" id="active">个人信息</a>
+                </div>
+
+                <div class="nb-a-holder-last">
+                    <div class="nb-a-holder-small">
+                        <a class="a-login" @click="logout" style="cursor: pointer;">注销</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+        <canvas class="canvas-wrap" id="triangle-lost-in-space" resize="true"></canvas>
+
+        <div id="app" z-index="99" style=" width: 100%;position: absolute; top: 11%; left: 9%;z-index: 99;">
+            <el-container class="big-container" id="particles-js">
+                <div class="article" style="width: 100%;">
+                    <div class="left-holder" style="width: 550px;position: relative;top: 60px;left: 100px;">
+                        <!-- Personal Info and Content -->
+                        <div class="column-container" v-if="!isPasswordPanel">
+                            <ul class="column_box" id="like-box">
+                                <li class="column-title">
+                                    <span class="at-sort b-b-ece fl"><a
+                                            class="at-sort-comment-a c-666 fl">关于我们</a></span>
+                                </li>
+                                <li class="person-img-li">
+                                    <img alt="头像" id="person-img" src="/statics/images/logo.png">
+                                </li>
+                                <li class="person-intro-detail gradient-text">
+                                    <h1>One More Thing</h1>
+                                </li>
+                                <li class="person-intro-detail">
+                                    <h3>网站简介：项目二博客</h3>
+                                </li>
+                                <li class="person-intro-detail">
+                                    <h3>所在地：四川</h3>
+                                </li>
+                                <li class="person-intro-detail">
+                                    <h3>时间：2024年11月9日</h3>
+                                </li>
+                                <li class="person-intro-detail">
+                                    <h3>网站环境：SSM + Mysql + Vue</h3>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="column-container" v-if="isPasswordPanel">
+                            <ul class="column_box" id="like-box">
+                                <li class="column-title">
+                                    <span class="at-sort b-b-ece fl"><a
+                                            class="at-sort-comment-a c-666 fl">修改密码</a></span>
+                                </li>
+                                <!-- 密码修改表单 -->
+                                <li>
+                                    <el-form ref="form" :model="form" :rules="rules" label-width="160px">
+                                        <el-form-item label="账号" prop="account" disabled>
+                                            <el-input v-model="form.account" type="text" placeholder="请输入账号"></el-input>
+                                        </el-form-item>
+
+
+
+                                        <el-form-item label="新密码" prop="password">
+                                            <el-input v-model="form.password" type="password"
+                                                placeholder="请输入新密码"></el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="确认密码" prop="checkPassword">
+                                            <el-input v-model="form.checkPassword" type="password"
+                                                placeholder="请确认密码"></el-input>
+                                        </el-form-item>
+
+                                        <el-form-item>
+                                            <el-button type="primary" @click="onSubmit('form')">确认</el-button>
+                                            <el-button type="text" @click="togglePasswordPanel">取消</el-button>
+                                        </el-form-item>
+                                    </el-form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="right-holder" style="position: relative;left: 113px;">
+                        <!-- Personal Info and Content -->
+                        <div class="column-container" style="width: 680px;">
+                            <ul class="column_box" id="like-box">
+                                <li class="column-title">
+                                    <span class="at-sort b-b-ece fl"><a
+                                            class="at-sort-comment-a c-666 fl">个人资料</a></span>
+                                </li>
+
+                                <!-- Avatar and Edit -->
+                                <li class="person-img-li" style="display: flex; flex-direction: row;">
+                                    <div class="info-item">
+                                        <div>头像</div>
+                                        <div style="display: flex;justify-content: center;">
+                                            <el-avatar v-if="!isUpdataAvatar" :src="person.avatar" :key="person.userId"
+                                                style="width: 64px;height: 64px; transition: all 0.3s ease;"></el-avatar>
+                                            <el-upload v-if="isUpdataAvatar" name="avatar" class="avatar-uploader"
+                                                :headers="header" action="/updateAvatar" :show-file-list="false"
+                                                :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                            </el-upload>
+                                        </div>
+                                        <div v-if="currentUserId == person.userId">
+                                            <el-button type="text" @click="isUpdataAvatar = !isUpdataAvatar">
+                                                {{ isUpdataAvatar ? '取消' : '修改' }}
+                                            </el-button>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Account Info -->
+                                <li class="person-intro-detail gradient-text">
+                                    <div class="info-item">
+                                        <div>账号</div>
+                                        <div style="font-size: large;">{{person.account}}</div>
+                                        <div style="width: 39.33px;"></div>
+                                    </div>
+                                </li>
+
+                                <!-- Editable Nickname -->
+                                <li class="person-intro-detail">
+                                    <div class="info-item">
+                                        <div>昵称</div>
+                                        <div>
+                                            <span v-if="!isUpdateNickname">{{person.nickname}}</span>
+                                            <el-input v-model="person.nickname" v-if="isUpdateNickname"></el-input>
+                                        </div>
+                                        <div v-if="currentUserId == person.userId">
+                                            <el-button type="text" v-if="!isUpdateNickname"
+                                                @click="isUpdateNickname = !isUpdateNickname">修改</el-button>
+                                            <el-button type="text" v-if="isUpdateNickname"
+                                                @click="updateNickname">确认</el-button>
+                                            <el-button v-if="isUpdateNickname" type="text"
+                                                @click="cancelNicknameUpdate">
+                                                取消
+                                            </el-button>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Editable Email -->
+                                <li class="person-intro-detail">
+                                    <div class="info-item">
+                                        <div>email</div>
+                                        <div>
+                                            <span v-if="!isUpdateEmail">{{person.email}}</span>
+                                            <el-input type="email" v-model="person.email"
+                                                v-if="isUpdateEmail"></el-input>
+                                        </div>
+                                        <div v-if="currentUserId == person.userId">
+                                            <el-button type="text" v-if="!isUpdateEmail"
+                                                @click="isUpdateEmail = !isUpdateEmail">修改</el-button>
+                                            <el-button type="text" v-if="isUpdateEmail"
+                                                @click="updateEmail">确认</el-button>
+                                            <el-button v-if="isUpdateEmail" type="text" @click="cancelEmailUpdate">
+                                                取消
+                                            </el-button>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="person-intro-detail"
+                                    v-if=" currentUserId == fis">
+                                    <div class="info-item">
+                                        <div>修改密码</div>
+                                        <div v-if="!isChangePassword">
+
+                                            <!-- Toggle button to show the form -->
+                                            <el-button type="text" @click=" togglePasswordPanel()">修改密码</el-button>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </el-container>
+        </div>
+
+        <!-- Footer content -->
+
+        <footer class="footer">
+            <div class="footer-line">Powered By Cross Fire • © 2024</div>
+        </footer>
+    </div>
+          
+
+
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script type="text/javascript" src="/statics/js/paper-full.min.js"></script>
+    <script type="text/javascript" src="/statics/js/canvas.js"></script>
+    <script src="/statics/js/request.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    person: {
+                        account: '',
+                        nickname: '',
+                        email: '',
+                        avatar: ''
+                    },
+                    header: {
+                        "token": window.sessionStorage.getItem("token")
+                    },
+                    isUpdataAvatar: false, // 控制是否处于修改头像状态
+                    isUpdateNickname: false, // 控制是否处于修改昵称状态
+                    isUpdateEmail: false, // 控制是否处于修改邮箱状态
+                    isChangePassword: false, // 控制是否处于修改密码状态
+                    isPasswordPanel: false, // 控制是否显示修改密码面板
+                    imageUrl: '', // 临时存储头像图片 URL
+                    currentUserId: 0, // 当前用户 ID
+                    originalNickname: '', // 初始昵称，用于取消修改
+                    originalEmail: '', // 初始邮箱，用于取消修改
+                    form: {
+                        account: '',
+                        password: '',
+                        checkPassword: ''
+                    },
+                    rules: {
+                        oldPassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
+                        password: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
+                        checkPassword: [
+                            { required: true, message: '请确认新密码', trigger: 'blur' },
+                            { validator: this.checkPasswordMatch, trigger: 'blur' }
+                        ]
+                    }
+                };
+            },
+            created() {
+                const id = window.location.pathname.split("/").pop(); // 获取用户 ID
+                request.post(`/personInfo/${id}`, res => {
+                    if (res) {
+                        this.person = res;
+                        this.person.avatar = "http://localhost:8080" + this.person.avatar;
+                        this.originalNickname = this.person.nickname;
+                        this.originalEmail = this.person.email;
+                        this.fis = this.person.userId;
+                        console.log(this.fis);
+                    } else {
+                        this.$message.error('加载用户信息失败');
+                    }
+                });
+                this.initUser();
+          
+
+
+            },
+
+            methods: {
+                async initUser() {
+                    await request.post("/personalInfomation", (res) => {
+                        this.personInfo = res;
+                        this.currentUserId = res.userId;
+                        console.log(this.currentUserId);
+                    });
+                },
+                // 头像上传成功后的处理
+                handleAvatarSuccess(res, file) {
+                    this.imageUrl = URL.createObjectURL(file.raw);
+                    this.person.avatar = this.imageUrl;
+                    this.isUpdataAvatar = !this.isUpdataAvatar;
+                },
+
+                // 切换修改密码面板显示状态
+                togglePasswordPanel() {
+                    this.isPasswordPanel = !this.isPasswordPanel;
+                },
+
+                // 头像上传前的验证
+                beforeAvatarUpload(file) {
+                    const isJPG = ['image/jpeg', 'image/png'].includes(file.type);
+                    const isLt2M = file.size / 1024 / 1024 < 2; // 限制大小为2MB
+                    if (!isJPG) this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+                    if (!isLt2M) this.$message.error('上传头像图片大小不能超过 2MB!');
+                    return isJPG && isLt2M;
+                },
+
+                // 更新昵称
+                updateNickname() {
+                    if (this.person.nickname.length > 4 && this.person.nickname.length < 12) {
+                        this.isUpdateNickname = !this.isUpdateNickname;
+                        this.update({ userId: this.person.userId, nickname: this.person.nickname });
+                    } else {
+                        this.$message.error("昵称长度应在 5 到 11 个字符之间");
+                    }
+                },
+
+                // 更新邮箱
+                updateEmail() {
+                    const emailPattern = /^[A-Za-z0-9]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                    if (emailPattern.test(this.person.email)) {
+                        this.isUpdateEmail = !this.isUpdateEmail;
+                        this.update({ userId: this.person.userId, email: this.person.email });
+                    } else {
+                        this.$message.error("邮箱格式不符合规范");
+                    }
+                },
+
+                // 取消头像更新
+                cancelAvatarUpdate() {
+                    this.isUpdataAvatar = false;
+                    this.imageUrl = '';
+                },
+
+                // 取消昵称修改
+                cancelNicknameUpdate() {
+                    this.person.nickname = this.originalNickname;
+                    this.isUpdateNickname = false;
+                },
+
+                // 取消邮箱修改
+                cancelEmailUpdate() {
+                    this.person.email = this.originalEmail;
+                    this.isUpdateEmail = false;
+                },
+
+                // 校验确认密码与新密码是否一致
+                checkPasswordMatch(rule, value, callback) {
+                    if (value !== this.form.password) {
+                        callback(new Error('确认密码与新密码不一致'));
+                    } else {
+                        callback();
+                    }
+                },
+
+                // 提交密码修改表单
+                onSubmit(form) {
+                    this.$refs[form].validate((valid) => {
+                        if (valid) {
+                            request.post('/updatePassword', this.form, (res) => {
+                                if (res.success) {
+                                    this.$message.success('密码修改成功');
+                                    window.sessionStorage.removeItem('token');
+                                    window.location = '/login'; // 重定向到登录页面
+                                } else {
+                                    this.$message.error('密码修改失败');
+                                }
+                            });
+                        } else {
+                            this.$message.error("修改失败，请检查输入的密码！");
+                        }
+                    });
+                },
+
+                // 更新用户信息
+                update(data) {
+                    request.post('/updateUserInfo', data, res => {
+                        if (res.success) {
+                            this.$message.success('更新成功');
+                        } else {
+                            this.$message.error('更新失败');
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+
+    <script>
+        new Vue({
+            el: 'nav',
+            methods: {
+                logout() {
+                    window.sessionStorage.removeItem('token')
+                    //document.cookie = `token=${res.token}; expires=${ data.getDate() -10 }`
+                    let date = new Date()
+                    date.setDate(date.getDate() - 1)
+                    document.cookie = `token=""; expires=${date.toUTCString()}`
+                    window.location = "/login"
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

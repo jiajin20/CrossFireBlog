@@ -1,0 +1,236 @@
+@import url("../css/public");
+@import url(../css/iconfont.css);
+body{
+    padding: 0;
+    margin: 0;
+}
+.el-header {
+    height: 85px !important;
+}
+
+header {
+    padding: 0 !important;
+}
+
+#logo {
+    display: flex;
+}
+
+
+#header > .el-row {
+    margin: 0% 20%;
+}
+.el-main::-webkit-scrollbar{
+    display: none;
+
+}
+#header > .el-row:first-child {
+    height: 100px;
+    border-bottom: solid 1px #e6e6e6;
+}
+
+#header > .el-row:last-child {
+    height: 60px;
+}
+
+#header h3 {
+    text-align: center;
+    color: white;
+    line-height: 60px;
+}
+
+#header .el-image {
+    margin-top: 10px;
+    border-radius: 50%;
+}
+
+#main .el-main {
+    /* margin: 100px 0% 150px 20%; */
+    background-color: #f5f6f7;
+
+
+}
+     body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevent body scrolling */
+        }
+
+        #main {
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 160px); /* Adjust height based on header and footer */
+            overflow-y: auto; /* Allow scrolling in the main content area */
+        }
+
+        article {
+            max-height: 600px; /* Set a max height for the article */
+            overflow-y: auto; /* Allow scrolling for long articles */
+        }
+
+#main header {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.el-main header + div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #556a7f;
+    align-items: center;
+}
+
+.el-main .red {
+    color: red;
+}
+
+.el-main header + div ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+    font-size: 16px;
+}
+
+.el-main header + div ul > li {
+    width: 50px;
+}
+
+#comments {
+    margin-top: 20px;
+}
+
+#comments ul {
+    padding: 0;
+    list-style: none;
+}
+
+#comments li {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    justify-content: center;
+}
+
+#comments li:last-child {
+    border-bottom: none;
+}
+
+#comments li > div:first-child {
+    flex: .5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#comments li > div:nth-child(2) {
+    flex: 3.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#comments li > div:last-child {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#newComment .el-button {
+    margin-top: 10px;
+}
+
+.el-aside {
+    margin-left: 20px;
+    padding: 20px 30px;
+    border-radius: 8px;
+    background-color: #8c939d;
+    /* height: 666px; */
+    position: relative;
+    top: -10px;
+}
+.el-aside::-webkit-scrollbar{
+    display: none;
+}
+.el-aside ol {
+    padding: 0px;
+}
+
+.el-aside li {
+    margin: 10px 0;
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: #f9f9f9;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+}
+
+.el-aside li:hover {
+    background-color: #e6f7ff;
+}
+.el-pager li{
+    padding: 0 !important;
+    text-align: center;
+    font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.el-footer {
+    background-color: #e7eaec;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    height: 50px !important;
+    position: relative;
+    top: 20px;
+}
+.el-pager{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center
+}
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+#header {
+    background-color: #3a8ee6;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+#main {
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: hidden;
+}
+
+.lw-article-content {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.lw-comment-avatar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.lw-comment-avatar el-input {
+    flex: 1;
+    margin-right: 10px;
+}
+.icon-operation{
+    background-image: url("../images/");
+}

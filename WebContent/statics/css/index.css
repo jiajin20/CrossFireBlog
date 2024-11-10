@@ -1,0 +1,281 @@
+@import url("//unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css");
+
+body {
+    overflow: hidden !important;
+    padding: 0;
+    margin: 0;
+}
+.el-drawer__body{
+    border-radius: 10px;
+    box-shadow: royalblue 0px 0px 10px;
+    border: snow 1px solid;
+}
+.el-dropdown-link {
+    color: white;
+    font-size: 24px;
+    margin-left: 10px;
+    line-height: 90px;
+    font-weight: bold;
+}
+
+.el-menu-item {
+    color: white !important;
+}
+.follow-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.follow-item:hover {
+    background-color: #f5f5f5; /* 鼠标悬停效果 */
+}
+
+.nickname {
+    font-size: 14px; /* 设置昵称字体大小 */
+}
+.el-card {
+    height: 250px;
+    width: 300px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0.2s ease-in-out;
+}
+
+.el-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.el-button {
+    border-radius: 20px;
+    /* Rounded corners */
+    transition: background-color 0.2s ease;
+}
+
+.el-button:hover {
+    background-color: #4f7b8f;
+    /* Slightly darker shade on hover */
+}
+
+.el-footer {
+    background-color: #e7eaec;
+    color: #556a7f;
+    display: flex;
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.gz_button {
+    width: 50px;
+    height: 50px;
+}
+
+.more>span {
+    font-size: 12px;
+    border-radius: 14px;
+    padding: 4px 8px;
+    background-color: rgb(85, 106, 127);
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.more>span:hover {
+    background-color: #dc8e7f;
+}
+
+.infinite-list {
+    width: 1530px;
+}
+
+.infinite-list-item {
+    height: 290px;
+    margin-left: 5% !important;
+}
+
+.el-header {
+    height: 160px;
+}
+
+#person-info {
+    display: flex;
+}
+
+#header {
+    background-color: #556a7f;
+}
+
+#header .el-dropdown {
+    color: white;
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+.el-dropdown-link {}
+
+#header>.el-row {
+    margin: 0% 20%;
+}
+
+#header>.el-row:first-child {
+    height: 100px;
+    border-bottom: solid 1px #e6e6e6;
+}
+
+#header>.el-row:last-child>.el-col:last-child {
+    margin-top: 10px;
+}
+
+#header .el-image {
+    margin-top: 10px;
+}
+
+.el-image {
+    border-radius: 50%;
+}
+
+#header h3 {
+    margin: 5px;
+    line-height: 100px;
+}
+
+#header .el-input {
+    margin: 30px 0px;
+}
+
+.el-card .el-card__body {
+    height: 205px;
+    overflow: hidden;
+}
+
+.el-card h4 {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.el-card section span {
+    margin: 2px 5px;
+    color: #868f98;
+}
+
+.el-card article {
+    margin: 10px 0px;
+    height: calc(100% - 80px);
+    text-indent: 2em;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#followers .el-col-8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#followed .el-col-8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.el-icon-connection {
+    color: red
+}
+
+.el-footer {
+    background-color: #e7eaec;
+    color: #556a7f;
+    display: flex;
+    font-size: 30px;
+    font-width: bold;
+    justify-content: center;
+    align-content: center;
+}
+
+.el-aside {
+    background-color: #f5f6f7;
+    padding: 10px;
+}
+
+.followers .el-col .nickname {
+    margin-top: 5px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.followers .el-col,
+.follewed .el-col {
+    height: 195px;
+}
+
+.more {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.more>span {
+    font-size: 12px;
+    border-radius: 14px;
+    padding: 4px 8px;
+    background-color: rgb(85, 106, 127);
+    color: #fff;
+}
+
+.more>span:hover {
+    background-color: #dc8e7f;
+
+}
+
+.infinite-list {
+    height: auto;
+  overflow-x: hidden;
+
+.infinite-list-item {
+    height: 290px;
+    width: 300px;
+}
+
+.el-card__body:hover {
+    cursor: default;
+}
+
+.time {
+    font-size: 13px;
+    color: #999;
+}
+
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+}
+
+.button {
+    padding: 0;
+    float: right;
+}
+
+.image {
+    width: 100%;
+    display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>分类</title>
+
+    <link rel="stylesheet" href="/statics/css/pace-theme-flash.css">
+    <link rel="stylesheet" href="/statics/css/global.css">
+    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/myPagination.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #app {
+            flex-grow: 1;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .footer-line {
+            color: #888;
+        }
+
+        .lazy-image {
+            background: url('../img/loading.gif') no-repeat center;
+            background-size: 26% 35%;
+            height: 100%;
+            width: 100%;
+        }
+
+        .column-category a:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar-holder" id="nav">
+            <div class="nav-bar" id="nav-bar">
+                <div class="logo-box">
+                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;" alt="logo"
+                            src="/statics/images/logo.png" /></a>
+                </div>
+                <div class="nb-a-holder" id="home"><a  class="nb-a ta-c" href="http://localhost:8080/index">首页</a></div>
+                <div class="nb-a-holder"><a class="nb-a ta-c" id="active" href="/statics/html/category.html">分类</a></div>
+                <div class="nb-a-holder">
+                    <a :href="'/personInfo/' + (personInfo.userId || '')" class="nb-a ta-c">个人信息</a>
+                </div>
+    
+                <div class="nb-a-holder-last">
+                    <div class="nb-a-holder-small">
+                        <a class="a-login" @click="logout" style="cursor: pointer;">注销</a>
+                    </div>
+                </div>
+    
+            </div>
+        </nav>
+
+        <div id="app">
+            <div class="big-container">
+                <article class="article">
+                    <div class="right-holder">
+                        <div class="column-container">
+                            <ul class="column_box" :default-active="activeIndex" mode="horizontal"
+                                @select="handleSelect" background-color="#556a7f" active-text-color="yellow"
+                                id="like-box">
+                                <li class="column-title">
+                                    <span class="at-sort b-b-ece fl"><a class="at-sort-comment-a c-666 fl">分类</a></span>
+                                </li>
+                                <li class="column-category" @click="handleSelect('0')"
+                                    :class="{ active: activeIndex === '0' }">
+                                    <a>全部</a>
+                                </li>
+                                <li v-for="(tag, index) in tags" :key="tag.blogTypeId" class="column-category"
+                                    @click="handleSelect(tag.blogTypeId.toString(), tag)"
+                                    :class="{ active: activeIndex === tag.blogTypeId.toString() }">
+                                    <a>{{ tag.typeName }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="result-box fl">
+                        <div id="article-holder" style="width: 100%; float: left" v-infinite-scroll="load" gutter="20">
+                            <div v-if="blogs.length">
+                                <div class="article-box" span="6" :offset="2" v-for="(blog, index) in blogs">
+                                    <div class="ab-content">
+                                        <a href="article.html" class="article-img-box">
+                                            <img class="lazy-image article-img" data-src="" alt=""
+                                                src="/statics/images/article.jpg">
+                                        </a>
+                                        <div class="article-title">
+                                            <a href="article.html">{{ blog.title || '暂无标题' }}</a>
+                                        </div>
+
+                                        <div class="article-detail-box c-666">
+                                            {{ blog.content }}
+                                        </div>
+                                        <span class="article-tail-box">
+                                            <i class="fl"
+                                                style="background-image: url('/statics/images/looks.svg')"></i>
+                                            <span class="read-number c-999 fl">{{ blog.readed }}</span>
+                                            <span class="comment-number c-999 fl">0</span>
+                                            <span class="article-date c-999">{{ blog.createDate | dateFormate }}</span>
+                                            <span class="article-author one-line-overflow c-999">{{ blog.authorName
+                                                }}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>没有找到相关内容。</div>
+                        </div>
+
+                        <div id="pagination" class="pagination fl"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- Footer content -->
+        <footer class="footer">
+            <div class="footer-line">Powered By Cross Fire • © 2024</div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script type="text/javascript" src="/statics/js/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/statics/js/js/pace.min.js"></script>
+    <script type="text/javascript" src="/statics/js/js/base.js"></script>
+    <script src="/statics/js/request.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    blogs: [],  // 存储博客列表
+                    pageParam: {
+                        current: 1,  // 当前页码
+                        size: 5,     // 每页大小
+                        totalSize: 0 // 总数据条数
+                    },
+                    totalPages: 0,  // 总页数
+                    tags: [],       // 存储分类标签
+                    activeIndex: '0', // 当前分类
+                    key: '',         // 搜索关键词
+                    loading: false   // 加载状态
+                };
+            },
+            created() {
+                this.initType();  // 初始化分类数据
+                this.initUser();  // 初始化用户信息
+                this.load();      // 加载博客数据
+            },
+            methods: {
+                handleSelect(index, tag) {
+                    if (this.activeIndex !== index) {
+                        this.pageParam.current = 1;  // 重置为第一页
+                        this.blogs = [];  // 清空当前数据
+                        this.activeIndex = index === '0' ? undefined : index;  // 处理分类选择
+                        this.load();  // 重新加载数据
+                    }
+                },
+
+                load() {
+                    const data = {
+                        typeId: this.activeIndex === '0' ? undefined : this.activeIndex,
+                        key: this.key.trim() || undefined
+                    };
+                    this.initBlog(this.pageParam, data);  // 根据当前页数获取数据
+                },
+
+                async initBlog(params, data) {
+                    const url = '/blogs';
+                    await request.post(url, data, params, (res) => {
+                        if (res && res.list) {
+                            this.blogs = res.list;
+                            this.pageParam.totalSize = res.totalSize;
+                        }
+                    });
+                },
+
+                async initType() {
+                    await request.post("/types", (res) => { this.tags = res; });
+                },
+
+                handlePageChange(page) {
+                    if (this.pageParam.current !== page) {
+                        this.pageParam.current = page;
+                        this.blogs = [];
+                        this.load();
+                    }
+                }
+            },
+            filters: {
+                dateFormate(date) {
+                    return date.substring(0, 10);  // 格式化日期
+                }
+            }
+        });
+    </script>
+
+<script>
+    new Vue({
+        el: 'nav',
+        data() {
+            return {
+                personInfo: { name: '', avatar: '/statics/images/18908.png' },
+            }
+        },
+        created() {
+            this.initUser()
+        },
+        methods: {
+            logout() {
+                window.sessionStorage.removeItem('token')
+                //document.cookie = `token=${res.token}; expires=${ data.getDate() -10 }`
+                let date = new Date()
+                date.setDate(date.getDate() - 1)
+                document.cookie = `token=""; expires=${date.toUTCString()}`
+                window.location = "/login"
+            },
+            toPersonInfo() {
+                if (this.personInfo.userId) {
+                    window.location = '/personInfo/' + this.personInfo.userId;
+                } else {
+                    console.error('User ID not available!');
+                }
+            },
+            async initUser() {
+                await request.post("/personalInfomation", (res) => {
+                    this.personInfo = res;
+                });
+            },
+        }
+    })
+</script>
+
+</body>
+
+</html>

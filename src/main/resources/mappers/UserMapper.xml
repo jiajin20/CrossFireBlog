@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gzy.mapper.UserMapper">
+
+    <sql id="baseUser">
+        userId,account,nickname,email,avatar
+    </sql>
+
+    <sql id="whereCondition">
+        <if test="userId != null">
+            and userId = #{userId}
+        </if>
+        <if test="account != null">
+            and account = #{account}
+        </if>
+        <if test="password != null">
+            and password = #{password}
+        </if>
+        <if test="nickname != null">
+            and nickname = #{nickname}
+        </if>
+        <if test="email != null">
+            and email = #{email}
+        </if>
+        <if test="avatar != null">
+            and avatar = #{avatar}
+        </if>
+    </sql>
+
+    <select id="searchByColumn" parameterType="User" resultType="User">
+        select <include refid="baseUser"></include>
+        from users
+        <where>
+            <include refid="whereCondition"></include>
+        </where>
+    </select>
+
+    <select id="searchInId" parameterType="int" resultType="User">
+        select <include refid="baseUser"></include>
+        from users
+        where userId in
+        <foreach collection="list" item="i" separator="," open="(" close=")">
+            #{i}
+        </foreach>
+    </select>
+
+    <update id="updateByCondition">
+        update users
+        <set>
+            <if test="user.userId != null">
+                userId = #{user.userId},
+            </if>
+            <if test="user.account != null">
+                account = #{user.account},
+            </if>
+            <if test="user.password != null">
+                password = #{user.password},
+            </if>
+            <if test="user.nickname != null">
+                nickname = #{user.nickname},
+            </if>
+            <if test="user.email != null">
+                email = #{user.email},
+            </if>
+            <if test="user.avatar != null">
+                avatar = #{user.avatar},
+            </if>
+        </set>
+        <where>
+            <if test="condition.userId != null">
+                and userId = #{condition.userId}
+            </if>
+            <if test="condition.account != null">
+                and account = #{condition.account}
+            </if>
+            <if test="condition.password != null">
+                and password = #{condition.password}
+            </if>
+            <if test="condition.nickname != null">
+                and nickname = #{condition.nickname}
+            </if>
+            <if test="condition.email != null">
+                and email = #{condition.email}
+            </if>
+            <if test="condition.avatar != null">
+                and avatar = #{condition.avatar}
+            </if>
+        </where>
+    </update>
+
+    <!--查询我关注的人和关注我的人的情况以及互关情况，tyep=1时是我关注的人，type=0时是关注我的人-->
+    <!-- 别名，字段中的子查询，因为有外部查询的字段，每一行均执行一次   -->
+    <select id="followship" parameterType="int" resultType="cn.gzy.vo.Follow">
+        select t1.* ,(select count(1) from attention where
+        <choose>
+            <when  test="type == 1">
+                `from`
+            </when>
+            <when  test="type == 0">
+                `to`
+            </when>
+        </choose>
+       = t1.userId and
+       <choose>
+           <when  test="type == 1">
+               `to`
+           </when>
+           <when  test="type == 0">
+               `from`
+           </when>
+       </choose>
+        = #{id}) isMutual
+        from
+        (select * from users where userId in
+        ( select
+        <choose>
+            <when  test="type == 1">
+                `to`
+            </when>
+            <when  test="type == 0">
+                `from`
+            </when>
+        </choose>
+        from attention where
+        <choose>
+            <when  test="type == 1">
+                `from`
+            </when>
+            <when  test="type == 0">
+                `to`
+            </when>
+        </choose>
+        = #{id})) as t1
+        <if test="key != null and key != ''">
+            where nickname like concat('%',#{key},'%')
+        </if>
+        limit #{current},#{size}
+    </select>
+
+    <select id="countOfFollow" resultType="int" parameterType="int">
+        select count(1)
+        from
+        (select * from users where userId in
+        ( select
+        <choose>
+            <when  test="type == 1">
+                `to`
+            </when>
+            <when  test="type == 0">
+                `from`
+            </when>
+        </choose>
+        from attention where
+        <choose>
+            <when  test="type == 1">
+                `from`
+            </when>
+            <when  test="type == 0">
+                `to`
+            </when>
+        </choose>
+        = #{id})) as t1
+        <if test="key != null and key != '' ">
+            where nickname like concat('%',#{key},'%')
+        </if>
+    </select>
+
+
+</mapper>

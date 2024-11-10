@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/vue@2.5/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="/statics/css/logins.css">
+    <link rel="stylesheet" href="/statics/css/loading.css">
+    <script src="/statics/js/script.js"></script>
+</head>
+
+<body>
+    <section id="app">
+        <div class="box">
+            <div class="cross" style="--i:0;"></div>
+            <div class="cross" style="--i:1;"></div>
+            <div class="cross" style="--i:2;"></div>
+            <div class="cross" style="--i:3;"></div>
+            <div class="cross" style="--i:4;"></div>
+            <div class="cross" style="--i:5;"></div>
+
+            <div class="container">
+                <div class="form" id="from">
+                    <h2>One More Thing</h2>
+                    <form @submit.prevent="onSubmit">
+                        <div class="inputBx">
+                            <input type="text" id="login" v-model="form.account" required>
+                            <span>账号</span>
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <span id="accountError"
+                            style="color: #f44336; font-size: 12px; display: block; margin-top: 5px;">{{ accountError
+                            }}</span>
+
+                        <div class="inputBx password">
+                            <input id="password-input" type="password" v-model="form.password" required>
+                            <span>密码</span>
+                            <a href="#" class="password-control" @click.prevent="showHidePassword"></a>
+                            <i class="fas fa-key"></i>
+                            <span id="passwordError"
+                                style="color: #f44336; font-size: 12px; display: block; margin-top: 5px;">{{
+                                passwordError }}</span>
+                        </div>
+
+                        <label class="remember">
+                            <input type="checkbox"> 记住我
+                        </label>
+                        <div class="inputBx">
+                            <input type="submit" value="Log in" :disabled="loading">
+                        </div>
+                    </form>
+                    <p>忘记密码？ <a href="#">点这里</a></p>
+                    <p>还没有账号 <a href="LoginReg.html">注册</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/statics/js/request.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    loading: false,
+                    form: {
+                        account: "",
+                        password: ''
+                    },
+                    accountError: '',
+                    passwordError: '',
+                }
+            },
+            methods: {
+                showHidePassword() {
+                    const passwordInput = document.getElementById('password-input');
+                    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+                },
+                validateInputs() {
+                    this.accountError = '';
+                    this.passwordError = '';
+
+                    if (!this.form.account) {
+                        this.accountError = '请输入账号';
+                    } else if (this.form.account.length < 4 || this.form.account.length > 12) {
+                        this.accountError = '长度在 4 到 12 个字符';
+                    }
+
+                    if (!this.form.password) {
+                        this.passwordError = '请输入密码';
+                    } else if (this.form.password.length < 6 || this.form.password.length > 16) {
+                        this.passwordError = '长度在 6 到 16 个字符';
+                    }
+
+                    return !this.accountError && !this.passwordError;
+                },
+                onSubmit() {
+                    if (!this.validateInputs()) {
+                        return;
+                    }
+
+                    this.loading = true;
+                    const startTime = Date.now();
+
+                    request.post('/login', this.form, (res) => {
+                        const startTime = Date.now();
+                        const elapsedTime = Date.now() - startTime;
+                        const waitTime = Math.max(2000 - elapsedTime, 0);
+                        window.sessionStorage.setItem('token', res.token);
+
+                        let date = new Date();
+                        date.setDate(date.getDate() + 7); 
+                        document.cookie = `token=${res.token}; expires=${date.toUTCString()}; path=/`; 
+                        
+                        setTimeout(() => {
+                            this.loading = false;
+                            window.location = 'http://localhost:8080/index';
+                        }, waitTime);
+                    }, (error) => {
+                        this.loading = false;
+                        this.$message.error(error.message || "登录失败，请检查账号或密码！");
+                    });
+
+                }
+            }
+        });
+    </script>
+
+    <style>
+        .cross {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            animation: cross 10s linear infinite;
+            animation-delay: calc(-1s * var(--i)) !important;
+        }
+
+        @keyframes cross {
+
+            0%,
+            100% {
+                transform: translateY(-40px);
+            }
+
+            50% {
+                transform: translateY(30px);
+            }
+        }
+
+        .cross:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: -15px;
+            right: -45px;
+        }
+
+        .cross:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 105px;
+            left: -125px;
+            z-index: 2;
+        }
+
+        .cross:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 85px;
+            right: -45px;
+            z-index: 2;
+        }
+
+        .cross:nth-child(4) {
+            width: 50px;
+            height: 50px;
+            bottom: 35px;
+            left: -95px;
+        }
+
+        .cross:nth-child(5) {
+            width: 50px;
+            height: 50px;
+            top: -15px;
+            left: -25px;
+        }
+
+        .cross:nth-child(6) {
+            width: 85px;
+            height: 85px;
+            top: 165px;
+            right: -155px;
+            z-index: 2;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+package cn.gzy.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdatePasswordUser extends LoginUser{
+    private String checkPassword;
+}

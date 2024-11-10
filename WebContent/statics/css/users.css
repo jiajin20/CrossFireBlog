@@ -1,0 +1,69 @@
+@import 'public.css';
+.el-header{
+    height:160px;!important;
+}
+header{
+    padding: 0!important;
+}
+#logo{
+    display: flex;
+}
+#header{
+    background-color: #556a7f;
+}
+
+#header>.el-row{
+    margin: 0% 20%;
+}
+#header>.el-row:first-child{
+    height:100px;
+    border-bottom: solid 1px #e6e6e6;
+}
+#header>.el-row:last-child{
+    height:60px;
+}
+#header h3{
+    text-align: center;
+    color:white;
+    line-height: 60px;
+}
+#header .el-image{
+    margin-top:10px;
+}
+.el-image{
+    border-radius: 50%;
+}
+.el-main{
+    margin:0 20%;
+    background-color: #f5f6f7;
+    height:616px;
+}
+.user{
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    height:160px;
+    position: relative;
+    border: #868f98 1px solid;
+    border-radius: 8px;
+    margin-right:15px;
+    margin-bottom:15px;
+}
+.user .nickname{
+    font-size: 18px;
+    margin:5px;
+}
+.user div:last-child i{
+    color:deeppink;
+}
+.user .el-icon-error{
+    position: absolute;
+    top:-8px;
+    right:-8px;
+}
+
+.el-footer{
+    background-color: #e7eaec;
+}

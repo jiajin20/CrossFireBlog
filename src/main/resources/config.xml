@@ -1,0 +1,31 @@
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//en" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--    <properties resource="db.properties" />-->
+    <settings>
+<!--        开启一级缓存-->
+        <setting name="cacheEnabled" value="true" />
+<!--        懒加载-->
+        <setting name="lazyLoadingEnabled" value="true" />
+<!--        配置日志工具-->
+        <setting name="logImpl" value="SLF4J" />
+    </settings>
+<!--    <typeAliases>-->
+<!--        <package name="cn.gzy.entity"/>-->
+<!--    </typeAliases>-->
+
+<!--    <environments default="dev">-->
+<!--        <environment id="dev">-->
+<!--            <transactionManager type="JDBC"/>-->
+<!--            <dataSource type="POOLED">-->
+<!--                <property name="driver" value="${taotie.driverClassName}" />-->
+<!--                <property name="url" value="${taotie.url}" />-->
+<!--                <property name="username" value="${taotie.username}" />-->
+<!--                <property name="password" value="${taotie.password}" />-->
+<!--            </dataSource>-->
+<!--        </environment>-->
+<!--    </environments>-->
+
+<!--    <mappers>-->
+<!--        <package name="cn.gzy.mapper"/>-->
+<!--    </mappers>-->
+</configuration>
