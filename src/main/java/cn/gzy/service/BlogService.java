@@ -36,4 +36,10 @@ public interface BlogService {
     Integer noFavorite(Favorite favorite);
 
     Integer isFavorited(Integer blogId, Integer userId);
+
+
+    Integer deleteComment(Integer commentId);
+
+
+
 }

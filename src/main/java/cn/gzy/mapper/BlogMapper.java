@@ -77,8 +77,15 @@ public interface BlogMapper {
     List<CommentVo> findCommentsByBlogId(Integer blogId);
     @Select("select * from blog order by readed desc limit 10")
     List<Blog> searchRecommend();
+
+
     @Insert("insert into comment value (null,#{cBlogId},#{reviewer},#{comment},#{reviewDate})")
     Integer newComment(Comment comment);
+
+
+
+
+
 
     @Update("<script>" +
             "update blog <set> " +
@@ -107,4 +114,9 @@ public interface BlogMapper {
     Integer noFavorite(Favorite favorite);
     @Select("select count(1) from favorite where fBlogId = #{blogId} and fUserId = #{userId}")
     Integer isFavorited(@Param("blogId") Integer blogId, @Param("userId") Integer userId);
+
+
+    @Delete("DELETE FROM comment WHERE commentId = #{commentId}")
+    Integer deleteComment(Integer commentId);
+
 }

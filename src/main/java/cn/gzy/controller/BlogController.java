@@ -59,6 +59,10 @@ public class BlogController {
         comment.setReviewDate(LocalDateTime.now());
         return blogService.newComment(comment);
     }
+
+
+
+
 @PostMapping("/liked")
 public Integer liked(@RequestBody LikedBo likedBo, HttpServletRequest req){
     Liked liked = new Liked();
@@ -92,4 +96,10 @@ public Integer liked(@RequestBody LikedBo likedBo, HttpServletRequest req){
     public Integer favorite(@PathVariable Integer blogId, HttpServletRequest req){
         return blogService.isFavorited(blogId,(Integer)req.getAttribute("id"));
     }
+
+    @DeleteMapping("/deleteComment/{commentId}")
+    public Integer deleteComment(@PathVariable("commentId") Integer commentId) {
+        return blogService.deleteComment(commentId);
+    }
+
 }

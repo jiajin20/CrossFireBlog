@@ -69,6 +69,7 @@ public BlogVo showOneBlog(Integer id) {
 
     @Override
     public Integer newComment(Comment comment) {
+
         return blogMapper.newComment(comment);
     }
 
@@ -108,6 +109,13 @@ public BlogVo showOneBlog(Integer id) {
     public Integer isFavorited(Integer blogId, Integer userId) {
         return blogMapper.isFavorited(blogId,userId);
     }
+
+    @Override
+    public Integer deleteComment(Integer commentId) {
+        return blogMapper.deleteComment(commentId);
+    }
+
+
 
 
 }
