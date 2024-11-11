@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-10-29 15:59:50
  * @LastEditors: jiajin20 3196117119@qq.com
- * @LastEditTime: 2024-11-11 11:20:09
+ * @LastEditTime: 2024-11-11 18:32:12
  * @FilePath: \WebContentc:\JAVAprogram\innerExpress2.0\WebContent\statics\html\index.html
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -94,10 +94,14 @@
                                                 src="/statics/images/article.jpg">
                                         </a>
                                         <div class="article-title">
-                                            <a>{{ blog.title || '暂无标题' }}</a>
+                                            <a :href="'/blog/' + blog.blogId">
+                                             {{ blog.title || '暂无标题' }} 
+                                        </a>
                                         </div>
                                         <div class="article-detail-box c-666">
+                                            <a :href="'/blog/' + blog.blogId">
                                             {{ blog.content }}
+                                            </a>
                                         </div>
                                         <span class="article-tail-box">
                                             <i class="fl"
@@ -238,17 +242,17 @@
                                     </span>
                                 </li>
                             </ul>
-                            <div v-for="(blog, index) in sortedBlogs" :key="blog.id">
+                            <div v-for="(blog, index) in sortedBlogs" :key="blog.id"   >
                                 <div class="article-box" style="width: 345px;overflow: hidden;">
                                     <div class="ab-content" style="width: 345px;overflow: hidden;">
                                         <div class="article-title">
-                                            <a style="font-size: 16px;">{{ blog.title || '暂无标题' }}</a>
+                                            <a style="font-size: 16px; width: 84% !important;">{{ blog.title || '暂无标题' }}</a>
                                         </div>
                                         <span class="article-tail-box">
                                             <i class="fl"
                                                 style="background-image: url('/statics/images/looks.svg')"></i>
                                             <span class="read-number c-999 fl">{{ blog.readed }}</span>
-                                            <span class="article-author one-line-overflow c-999">{{ blog.authorName
+                                            <span class="article-author one-line-overflow c-999" style="margin-right: 50%;">{{ blog.authorName
                                                 }}</span>
                                         </span>
                                     </div>
@@ -276,8 +280,9 @@
             </div>
 
 
-            <el-dialog :visible.sync="dialogVisible[0]" width="30%">
-                <div id="search-nb">
+            <el-dialog :visible.sync="dialogVisible[0]" width="30%" >
+                <p v-show="showError" style="color: red;">请输入关键字</p>
+                <div id="search" style="display: block;">
                     <!-- 使用 flexbox 代替浮动布局 -->
                     <span class="search-s" style="display: flex; align-items: center;">
                         <!-- el-input 提供了占位符功能，无需额外的 label -->
@@ -285,14 +290,13 @@
 
                             <template #append>
                                 <a class="search-icon fl" @click="search" href="javascript:void(0);">
-                                    搜索
                                 </a>
                             </template>
                         </el-input>
                     </span>
                 </div>
             </el-dialog>
-
+           
 
             <el-dialog :visible.sync="dialogVisible[1]" width="30%">
                 <el-form ref="newBlog" :model="newBlog" label-width="160px" :rules="newBlogRules">
@@ -336,6 +340,7 @@
             el: '#app',
             data() {
                 return {
+                    showError: false,
                     topClicks: [],
                     form: { account: '', password: '', checkPassword: '' },
                     newBlogRules: {
@@ -349,7 +354,10 @@
                         ],
                         typeId: [
                             { required: true, message: '请选择类型', trigger: 'blur' }
-                        ]
+                        ],
+                        seach:{
+                            required: true, message: '请输入内容', trigger: 'blur' 
+                        }
                     },
                     personInfo: { name: '', avatar: '/statics/images/18908.png' },
                     newBlog: { title: '', content: '', typeId: null },
@@ -487,10 +495,20 @@
 
                 // 搜索功能处理
                 search() {
-                    this.pageParam.current = 1;  // 重置页码为第一页
-                    this.blogs = [];  // 清空当前博客列表
-                    this.load();  // 重新加载博客数据
-                },
+        if (this.key.trim() === '') {
+            this.showError = true;  // 显示错误提示
+            setTimeout(() => {
+                this.showError = false;  // 延迟一段时间后自动隐藏错误提示
+            }, 2000);
+            return;
+        }
+
+        this.showError = false;  // 隐藏错误提示
+        this.pageParam.current = 1;  // 重置页码为第一页
+        this.blogs = [];  // 清空当前博客列表
+        this.load();  // 加载数据
+        this.dialogVisible[0] = false;  // 关闭弹窗
+    },
 
                 // 跳转到博客详情页
                 blogDetail(id) {

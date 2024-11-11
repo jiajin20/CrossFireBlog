@@ -116,11 +116,15 @@
                                                 src="/statics/images/article.jpg">
                                         </a>
                                         <div class="article-title">
-                                            <a :href="'/blog/' + blog.blogId">{{ blog.title || '暂无标题' }}</a>
+                                            <a :href="'/blog/' + blog.blogId">
+                                            {{ blog.title || '暂无标题' }}
+                                        </a>
                                         </div>
 
                                         <div class="article-detail-box c-666">
+                                            <a :href="'/blog/' + blog.blogId">
                                             {{ blog.content }}
+                                            </a>
                                         </div>
                                         <span class="article-tail-box">
                                             <i class="fl"
@@ -164,7 +168,7 @@
                     blogs: [],  // 存储博客列表
                     pageParam: {
                         current: 1,  // 当前页码
-                        size: 5,     // 每页大小
+                        size: 100,     // 每页大小
                         totalSize: 0 // 总数据条数
                     },
                     totalPages: 0,  // 总页数
