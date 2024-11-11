@@ -21,6 +21,8 @@
     <mvc:resources mapping="/guanwang/**" location="/guanwang/"/>
     <mvc:resources mapping="/login.html" location="/login"/>
     <mvc:resources mapping="/index1.html" location="/index1.html"/>
+    <mvc:resources mapping="/category.html" location="/statics/html/category.html"/>
+
 
     <!-- 在Spring MVC配置文件中配置Jackson -->
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
