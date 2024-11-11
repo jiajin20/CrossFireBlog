@@ -408,15 +408,15 @@
                     });
 
                 },
-
-
                 // 更新用户信息
                 update(data) {
-                    request.post('/updateUserInfo', data, res => {
+                    request.post('/updateUser', data, res => {
+                        console.log(res);
                         if (res.success) {
-                            this.$message.success('更新成功');
-                        } else {
                             this.$message.error('更新失败');
+                        } else {
+                            
+                            this.$message.success('更新成功');
                         }
                     });
                 }

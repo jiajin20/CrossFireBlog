@@ -40,9 +40,6 @@ public interface BlogService {
 
     Integer deleteComment(Integer commentId);
 
-    List<BlogVo> findTopClickedBlogs();
-
-    List<Blog> getTopClicks();
 
 
 

@@ -1,8 +1,8 @@
 <!--
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-10-29 15:59:50
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-11-10 11:49:20
+ * @LastEditors: jiajin20 3196117119@qq.com
+ * @LastEditTime: 2024-11-11 11:20:09
  * @FilePath: \WebContentc:\JAVAprogram\innerExpress2.0\WebContent\statics\html\index.html
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -58,8 +58,8 @@
         <nav class="nav-bar-holder" id="nav">
             <div class="nav-bar" id="nav-bar">
                 <div class="logo-box">
-                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;" alt="logo"
-                            src="/statics/images/logo.png" /></a>
+                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;"
+                            alt="logo" src="/statics/images/logo.png" /></a>
                 </div>
                 <div class="nb-a-holder" id="home"><a id="active" class="nb-a ta-c" href="index">首页</a></div>
                 <div class="nb-a-holder"><a class="nb-a ta-c" href="/category.html">分类</a></div>
@@ -237,8 +237,23 @@
                                         <a class="at-sort-comment-a c-666 fl">点击排行</a>
                                     </span>
                                 </li>
-
                             </ul>
+                            <div v-for="(blog, index) in sortedBlogs" :key="blog.id">
+                                <div class="article-box" style="width: 345px;overflow: hidden;">
+                                    <div class="ab-content" style="width: 345px;overflow: hidden;">
+                                        <div class="article-title">
+                                            <a style="font-size: 16px;">{{ blog.title || '暂无标题' }}</a>
+                                        </div>
+                                        <span class="article-tail-box">
+                                            <i class="fl"
+                                                style="background-image: url('/statics/images/looks.svg')"></i>
+                                            <span class="read-number c-999 fl">{{ blog.readed }}</span>
+                                            <span class="article-author one-line-overflow c-999">{{ blog.authorName
+                                                }}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -321,6 +336,7 @@
             el: '#app',
             data() {
                 return {
+                    topClicks: [],
                     form: { account: '', password: '', checkPassword: '' },
                     newBlogRules: {
                         title: [
@@ -351,20 +367,18 @@
                     key: '',  // 搜索关键字
                     dialogVisible: [false, false],  // 弹出框状态
                     drawer: false  // 抽屉状态
-
                 };
-
             },
 
             created() {
+                this.load();
                 this.initType();  // 初始化博客类型
                 this.initUser();  // 获取用户信息
                 this.initFollowers();  // 初始化关注列表
                 this.initFolloweds();  // 初始化粉丝列表
-                this.load();
                 request.post('/followInfo', (res) => {
                     this.follow.userId = res.userId;
-                }); // 初次加载博客列表
+                });
             },
             methods: {
                 // 分页事件处理
@@ -372,6 +386,7 @@
                     this.pageParam.current = page;
                     this.load();  // 加载新的页码的博客
                 },
+
                 onSubmitNew(form) {
                     this.$refs[form].validate((valid) => {
                         if (valid) {
@@ -465,9 +480,9 @@
                     }
                 },
                 toggleStatus(status) {
-                    console.log(status)
-                    console.log(!this.dialogVisible)
-                    this.$set(this.dialogVisible, status, !this.dialogVisible[status])
+                    console.log(status);
+                    console.log(!this.dialogVisible);
+                    this.$set(this.dialogVisible, status, !this.dialogVisible[status]);
                 },
 
                 // 搜索功能处理
@@ -480,6 +495,16 @@
                 // 跳转到博客详情页
                 blogDetail(id) {
                     window.location = "/blog/" + id;
+                }
+            },
+
+            computed: {
+                // 计算属性来排序博客列表
+                sortedBlogs() {
+                    if (!this.blogs || this.blogs.length === 0) {
+                        return [];  // 如果没有数据，返回空数组
+                    }
+                    return this.blogs.sort((a, b) => b.readed - a.readed);
                 }
             },
 
