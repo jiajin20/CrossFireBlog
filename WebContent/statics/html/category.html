@@ -110,12 +110,13 @@
                             <div v-if="blogs.length">
                                 <div class="article-box" span="6" :offset="2" v-for="(blog, index) in blogs">
                                     <div class="ab-content">
-                                        <a href="article.html" class="article-img-box">
+                                    
+                                        <a class="article-img-box" :href="'/blog/' + blog.blogId" >
                                             <img class="lazy-image article-img" data-src="" alt=""
                                                 src="/statics/images/article.jpg">
                                         </a>
                                         <div class="article-title">
-                                            <a href="article.html">{{ blog.title || '暂无标题' }}</a>
+                                            <a :href="'/blog/' + blog.blogId">{{ blog.title || '暂无标题' }}</a>
                                         </div>
 
                                         <div class="article-detail-box c-666">
@@ -130,6 +131,7 @@
                                             <span class="article-author one-line-overflow c-999">{{ blog.authorName
                                                 }}</span>
                                         </span>
+                                     
                                     </div>
                                 </div>
                             </div>
@@ -215,6 +217,9 @@
                         this.blogs = [];
                         this.load();
                     }
+                },
+                blogDetail(id) {
+                    window.location = "/blog/" + id;
                 }
             },
             filters: {
