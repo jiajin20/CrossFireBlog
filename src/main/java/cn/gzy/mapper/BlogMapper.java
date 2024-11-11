@@ -119,4 +119,30 @@ public interface BlogMapper {
     @Delete("DELETE FROM comment WHERE commentId = #{commentId}")
     Integer deleteComment(Integer commentId);
 
+
+
+    @Select("SELECT b.blogId, b.title, b.content, b.author, b.createDate, b.typeId, b.readed, " +
+            "u.nickname AS authorName, " +
+            "(SELECT COUNT(1) FROM liked WHERE iBlogId = b.blogId) AS countOfLiked, " +
+            "(SELECT COUNT(1) FROM favorite WHERE fBlogId = b.blogId) AS countOfFavorite " +
+            "FROM blog b " +
+            "LEFT JOIN users u ON b.author = u.userId " +
+            "ORDER BY b.readed DESC " +
+            "LIMIT 10")
+    @Results(id="blogVo", value = {
+            @Result(id = true, column = "blogId", property = "blogId"),
+            @Result(column = "title", property = "title"),
+            @Result(column = "content", property = "content"),
+            @Result(column = "author", property = "author"),
+            @Result(column = "createDate", property = "createDate"),
+            @Result(column = "typeId", property = "typeId"),
+            @Result(column = "readed", property = "readed"),
+            @Result(column = "countOfLiked", property = "countOfLiked"),
+            @Result(column = "countOfFavorite", property = "countOfFavorite"),
+            @Result(property = "authorName", column = "nickname")
+    })
+    List<BlogVo> selectTopClickedBlogs();
+
+    @Select("SELECT blogId, title, readed FROM blog ORDER BY readed DESC LIMIT 5")
+    List<Blog> getTopClicks();
 }

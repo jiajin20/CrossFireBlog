@@ -102,4 +102,14 @@ public Integer liked(@RequestBody LikedBo likedBo, HttpServletRequest req){
         return blogService.deleteComment(commentId);
     }
 
+    @PostMapping("/ranking")
+    public List<BlogVo> getRankingBlogs() {
+        return blogService.findTopClickedBlogs();
+    }
+    @GetMapping("/top-clicks")
+    public List<Blog> getTopClicks() {
+        return blogService.getTopClicks();  // 调用服务层获取点击排行数据
+    }
+
+
 }

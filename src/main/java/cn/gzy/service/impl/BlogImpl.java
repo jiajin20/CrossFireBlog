@@ -114,6 +114,15 @@ public BlogVo showOneBlog(Integer id) {
     public Integer deleteComment(Integer commentId) {
         return blogMapper.deleteComment(commentId);
     }
+    @Override
+    public List<BlogVo> findTopClickedBlogs() {
+        return blogMapper.selectTopClickedBlogs();
+    }
+
+    @Override
+    public List<Blog> getTopClicks() {
+        return blogMapper.getTopClicks();
+    }
 
 
 
