@@ -6,14 +6,12 @@
     <title>更多</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="/statics/css/global.css">
-    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/index.css">
     <link rel="stylesheet" href="/statics/css/users.css">
-    <!-- <link rel="stylesheet" href="/statics/css/home-style.css"> -->
-    <link rel="stylesheet" href="/statics/css/friendlink.css">
+    <link rel="stylesheet" href="/statics/css/link.css">
     <link rel="stylesheet" href="/statics/css/tab.css">
     <link rel="stylesheet" href="/statics/css/myPagination.css">
     <style>
-        /* 使页面高度为100%，容器使用flex布局 */
         body,
         html {
             margin: 0;
@@ -29,7 +27,6 @@
 
         #app {
             flex-grow: 1;
-            /* 使内容部分占据剩余空间 */
         }
 
         .footer {
@@ -38,7 +35,6 @@
             text-align: center;
             width: 100%;
             position: relative;
-            /* 默认位置，保持在底部 */
         }
 
         .footer-line {
@@ -52,21 +48,21 @@
         <nav class="nav-bar-holder" id="nav">
             <div class="nav-bar" id="nav-bar">
                 <div class="logo-box">
-                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;" alt="logo"
-                            src="/statics/images/logo.png" /></a>
+                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;"
+                            alt="logo" src="/statics/images/logo.png" /></a>
                 </div>
-                <div class="nb-a-holder" id="home"><a   class="nb-a ta-c" href="http://localhost:8080/index">首页</a></div>
+                <div class="nb-a-holder" id="home"><a class="nb-a ta-c" href="http://localhost:8080/index">首页</a></div>
                 <div class="nb-a-holder"><a class="nb-a ta-c" href="/statics/html/category.html">分类</a></div>
                 <div class="nb-a-holder">
                     <a :href="'/personInfo/' + (personInfo.userId || '')" class="nb-a ta-c">个人信息</a>
                 </div>
-    
+
                 <div class="nb-a-holder-last">
                     <div class="nb-a-holder-small">
                         <a class="a-login" @click="logout" style="cursor: pointer;">注销</a>
                     </div>
                 </div>
-    
+
             </div>
         </nav>
 
@@ -148,7 +144,7 @@
                             break;
                     }
                 },
-                handleSizeChange(val) { // 每页val条
+                handleSizeChange(val) {
                     this.pageParam.size = val
                     switch (this.head) {
                         case "followers":
@@ -203,41 +199,41 @@
         })
     </script>
 
-<script>
-    new Vue({
-        el: 'nav',
-        data() {
-            return {
-                personInfo: { name: '', avatar: '/statics/images/18908.png' },
-            }
-        },
-        created() {
-            this.initUser()
-        },
-        methods: {
-            logout() {
-                window.sessionStorage.removeItem('token')
-                //document.cookie = `token=${res.token}; expires=${ data.getDate() -10 }`
-                let date = new Date()
-                date.setDate(date.getDate() - 1)
-                document.cookie = `token=""; expires=${date.toUTCString()}`
-                window.location = "/login"
-            },
-            toPersonInfo() {
-                if (this.personInfo.userId) {
-                    window.location = '/personInfo/' + this.personInfo.userId;
-                } else {
-                    console.error('User ID not available!');
+    <script>
+        new Vue({
+            el: 'nav',
+            data() {
+                return {
+                    personInfo: { name: '', avatar: '/statics/images/18908.png' },
                 }
             },
-            async initUser() {
-                await request.post("/personalInfomation", (res) => {
-                    this.personInfo = res;
-                });
+            created() {
+                this.initUser()
             },
-        }
-    })
-</script>
+            methods: {
+                logout() {
+                    window.sessionStorage.removeItem('token')
+                    //document.cookie = `token=${res.token}; expires=${ data.getDate() -10 }`
+                    let date = new Date()
+                    date.setDate(date.getDate() - 1)
+                    document.cookie = `token=""; expires=${date.toUTCString()}`
+                    window.location = "/login"
+                },
+                toPersonInfo() {
+                    if (this.personInfo.userId) {
+                        window.location = '/personInfo/' + this.personInfo.userId;
+                    } else {
+                        console.error('User ID not available!');
+                    }
+                },
+                async initUser() {
+                    await request.post("/personalInfomation", (res) => {
+                        this.personInfo = res;
+                    });
+                },
+            }
+        })
+    </script>
 
 </body>
 

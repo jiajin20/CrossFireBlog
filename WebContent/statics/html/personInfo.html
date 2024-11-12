@@ -6,7 +6,7 @@
     <title>个人信息</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="/statics/css/global.css">
-    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/index.css">
     <link rel="stylesheet" href="/statics/css/myPagination.css">
     <link rel="stylesheet" href="/statics/css/personInfo.css">
     <style>
@@ -38,13 +38,13 @@
         <nav class="nav-bar-holder" id="nav">
             <div class="nav-bar" id="nav-bar">
                 <div class="logo-box">
-                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;" alt="logo"
-                            src="/statics/images/logo.png" /></a>
+                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;"
+                            alt="logo" src="/statics/images/logo.png" /></a>
                 </div>
                 <div class="nb-a-holder" id="home"><a class="nb-a ta-c" href="http://localhost:8080/index">首页</a></div>
                 <div class="nb-a-holder"><a class="nb-a ta-c" href="/statics/html/category.html">分类</a></div>
                 <div class="nb-a-holder">
-                    <a  class="nb-a ta-c" id="active">个人信息</a>
+                    <a class="nb-a ta-c" id="active">个人信息</a>
                 </div>
 
                 <div class="nb-a-holder-last">
@@ -55,14 +55,11 @@
 
             </div>
         </nav>
-
         <canvas class="canvas-wrap" id="triangle-lost-in-space" resize="true"></canvas>
-
         <div id="app" z-index="99" style=" width: 100%;position: absolute; top: 11%; left: 9%;z-index: 99;">
             <el-container class="big-container" id="particles-js">
                 <div class="article" style="width: 100%;">
                     <div class="left-holder" style="width: 550px;position: relative;top: 60px;left: 100px;">
-                        <!-- Personal Info and Content -->
                         <div class="column-container" v-if="!isPasswordPanel">
                             <ul class="column_box" id="like-box">
                                 <li class="column-title">
@@ -100,17 +97,10 @@
                                 <li>
                                     <el-form ref="form" :model="form" :rules="rules" label-width="160px">
                                         <el-form-item label="账号" prop="account">
-                                            <el-input
-                                                    v-model="form.account"
-                                                    :readonly="true"
-                                                    type="text"
-                                                    :placeholder="person.account">
+                                            <el-input v-model="form.account" :readonly="true" type="text"
+                                                :placeholder="person.account">
                                             </el-input>
                                         </el-form-item>
-
-
-
-
                                         <el-form-item label="新密码" prop="password">
                                             <el-input v-model="form.password" type="password"
                                                 placeholder="请输入新密码"></el-input>
@@ -131,15 +121,12 @@
                         </div>
                     </div>
                     <div class="right-holder" style="position: relative;left: 113px;">
-                        <!-- Personal Info and Content -->
                         <div class="column-container" style="width: 680px;">
                             <ul class="column_box" id="like-box">
                                 <li class="column-title">
                                     <span class="at-sort b-b-ece fl"><a
                                             class="at-sort-comment-a c-666 fl">个人资料</a></span>
                                 </li>
-
-                                <!-- Avatar and Edit -->
                                 <li class="person-img-li" style="display: flex; flex-direction: row;">
                                     <div class="info-item">
                                         <div>头像</div>
@@ -161,8 +148,6 @@
                                         </div>
                                     </div>
                                 </li>
-
-                                <!-- Account Info -->
                                 <li class="person-intro-detail gradient-text">
                                     <div class="info-item">
                                         <div>账号</div>
@@ -170,8 +155,6 @@
                                         <div style="width: 39.33px;"></div>
                                     </div>
                                 </li>
-
-                                <!-- Editable Nickname -->
                                 <li class="person-intro-detail">
                                     <div class="info-item">
                                         <div>昵称</div>
@@ -191,8 +174,6 @@
                                         </div>
                                     </div>
                                 </li>
-
-                                <!-- Editable Email -->
                                 <li class="person-intro-detail">
                                     <div class="info-item">
                                         <div>email</div>
@@ -212,43 +193,25 @@
                                         </div>
                                     </div>
                                 </li>
-
-                                <li class="person-intro-detail"
-                                    v-if=" currentUserId == fis">
+                                <li class="person-intro-detail" v-if=" currentUserId == fis">
                                     <div class="info-item">
                                         <div>修改密码</div>
                                         <div v-if="!isChangePassword">
-
-                                            <!-- Toggle button to show the form -->
                                             <el-button type="text" @click=" togglePasswordPanel()">修改密码</el-button>
                                         </div>
-
                                     </div>
                                 </li>
-
-
-
                             </ul>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
             </el-container>
         </div>
-
-        <!-- Footer content -->
 
         <footer class="footer">
             <div class="footer-line">Powered By Cross Fire • © 2024</div>
         </footer>
     </div>
-          
-
 
     <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -308,11 +271,7 @@
                     }
                 });
                 this.initUser();
-
-
-
             },
-
             methods: {
                 async initUser() {
                     await request.post("/personalInfomation", (res) => {
@@ -327,12 +286,10 @@
                     this.person.avatar = this.imageUrl;
                     this.isUpdataAvatar = !this.isUpdataAvatar;
                 },
-
                 // 切换修改密码面板显示状态
                 togglePasswordPanel() {
                     this.isPasswordPanel = !this.isPasswordPanel;
                 },
-
                 // 头像上传前的验证
                 beforeAvatarUpload(file) {
                     const isJPG = ['image/jpeg', 'image/png'].includes(file.type);
@@ -341,7 +298,6 @@
                     if (!isLt2M) this.$message.error('上传头像图片大小不能超过 2MB!');
                     return isJPG && isLt2M;
                 },
-
                 // 更新昵称
                 updateNickname() {
                     if (this.person.nickname.length > 4 && this.person.nickname.length < 12) {
@@ -351,7 +307,6 @@
                         this.$message.error("昵称长度应在 5 到 11 个字符之间");
                     }
                 },
-
                 // 更新邮箱
                 updateEmail() {
                     const emailPattern = /^[A-Za-z0-9]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -362,25 +317,21 @@
                         this.$message.error("邮箱格式不符合规范");
                     }
                 },
-
                 // 取消头像更新
                 cancelAvatarUpdate() {
                     this.isUpdataAvatar = false;
                     this.imageUrl = '';
                 },
-
                 // 取消昵称修改
                 cancelNicknameUpdate() {
                     this.person.nickname = this.originalNickname;
                     this.isUpdateNickname = false;
                 },
-
                 // 取消邮箱修改
                 cancelEmailUpdate() {
                     this.person.email = this.originalEmail;
                     this.isUpdateEmail = false;
                 },
-
                 // 校验确认密码与新密码是否一致
                 checkPasswordMatch(rule, value, callback) {
                     if (value !== this.form.password) {
@@ -389,7 +340,6 @@
                         callback();
                     }
                 },
-
                 // 提交密码修改表单
                 onSubmit(form) {
                     this.form.account = this.person.account;
@@ -415,7 +365,7 @@
                         if (res.success) {
                             this.$message.error('更新失败');
                         } else {
-                            
+
                             this.$message.success('更新成功');
                         }
                     });
@@ -423,7 +373,6 @@
             }
         });
     </script>
-
 
     <script>
         new Vue({

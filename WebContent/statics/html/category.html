@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="/statics/css/pace-theme-flash.css">
     <link rel="stylesheet" href="/statics/css/global.css">
-    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/index.css">
     <link rel="stylesheet" href="/statics/css/myPagination.css">
     <style>
         body,
@@ -148,7 +148,6 @@
             </div>
         </div>
 
-        <!-- Footer content -->
         <footer class="footer">
             <div class="footer-line">Powered By Cross Fire • © 2024</div>
         </footer>
@@ -156,40 +155,40 @@
 
     <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script type="text/javascript" src="/statics/js/js/sweetalert.min.js"></script>
-    <script type="text/javascript" src="/statics/js/js/pace.min.js"></script>
-    <script type="text/javascript" src="/statics/js/js/base.js"></script>
+    <script type="text/javascript" src="/statics/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/statics/js/pace.min.js"></script>
+    <script type="text/javascript" src="/statics/js/base.js"></script>
     <script src="/statics/js/request.js"></script>
     <script>
         new Vue({
             el: '#app',
             data() {
                 return {
-                    blogs: [],  // 存储博客列表
+                    blogs: [],  
                     pageParam: {
-                        current: 1,  // 当前页码
-                        size: 100,     // 每页大小
-                        totalSize: 0 // 总数据条数
+                        current: 1,  
+                        size: 100,     
+                        totalSize: 0 
                     },
-                    totalPages: 0,  // 总页数
-                    tags: [],       // 存储分类标签
-                    activeIndex: '0', // 当前分类
-                    key: '',         // 搜索关键词
-                    loading: false   // 加载状态
+                    totalPages: 0,  
+                    tags: [],       
+                    activeIndex: '0', 
+                    key: '',         
+                    loading: false   
                 };
             },
             created() {
-                this.initType();  // 初始化分类数据
-                this.initUser();  // 初始化用户信息
-                this.load();      // 加载博客数据
+                this.initType();  
+                this.initUser();  
+                this.load();      
             },
             methods: {
                 handleSelect(index, tag) {
                     if (this.activeIndex !== index) {
-                        this.pageParam.current = 1;  // 重置为第一页
-                        this.blogs = [];  // 清空当前数据
-                        this.activeIndex = index === '0' ? undefined : index;  // 处理分类选择
-                        this.load();  // 重新加载数据
+                        this.pageParam.current = 1; 
+                        this.blogs = [];  
+                        this.activeIndex = index === '0' ? undefined : index;  
+                        this.load();  
                     }
                 },
 
@@ -198,7 +197,7 @@
                         typeId: this.activeIndex === '0' ? undefined : this.activeIndex,
                         key: this.key.trim() || undefined
                     };
-                    this.initBlog(this.pageParam, data);  // 根据当前页数获取数据
+                    this.initBlog(this.pageParam, data);  
                 },
 
                 async initBlog(params, data) {
@@ -228,7 +227,7 @@
             },
             filters: {
                 dateFormate(date) {
-                    return date.substring(0, 10);  // 格式化日期
+                    return date.substring(0, 10);  
                 }
             }
         });

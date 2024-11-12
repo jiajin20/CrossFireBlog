@@ -7,10 +7,79 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/vue@2.5/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <link rel="stylesheet" href="/statics/css/logins.css">
-    <link rel="stylesheet" href="/statics/css/loading.css">
+    <link rel="stylesheet" href="/statics/css/login.css">
     <script src="/statics/js/script.js"></script>
 </head>
+
+<style>
+    .cross {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        animation: cross 10s linear infinite;
+        animation-delay: calc(-1s * var(--i)) !important;
+    }
+
+    @keyframes cross {
+
+        0%,
+        100% {
+            transform: translateY(-40px);
+        }
+
+        50% {
+            transform: translateY(30px);
+        }
+    }
+
+    .cross:nth-child(1) {
+        width: 100px;
+        height: 100px;
+        top: -15px;
+        right: -45px;
+    }
+
+    .cross:nth-child(2) {
+        width: 150px;
+        height: 150px;
+        top: 105px;
+        left: -125px;
+        z-index: 2;
+    }
+
+    .cross:nth-child(3) {
+        width: 60px;
+        height: 60px;
+        bottom: 85px;
+        right: -45px;
+        z-index: 2;
+    }
+
+    .cross:nth-child(4) {
+        width: 50px;
+        height: 50px;
+        bottom: 35px;
+        left: -95px;
+    }
+
+    .cross:nth-child(5) {
+        width: 50px;
+        height: 50px;
+        top: -15px;
+        left: -25px;
+    }
+
+    .cross:nth-child(6) {
+        width: 85px;
+        height: 85px;
+        top: 165px;
+        right: -155px;
+        z-index: 2;
+    }
+</style>
 
 <body>
     <section id="app">
@@ -21,6 +90,7 @@
             <div class="cross" style="--i:3;"></div>
             <div class="cross" style="--i:4;"></div>
             <div class="cross" style="--i:5;"></div>
+           ...... 
 
             <div class="container">
                 <div class="form" id="from">
@@ -45,12 +115,12 @@
                                 passwordError }}</span>
                         </div>
 
-                       
+
                         <div class="inputBx">
                             <input type="submit" value="Log in" :disabled="loading">
                         </div>
                     </form>
-                    
+
                     <p>还没有账号 <a href="/LoginReg">注册</a></p>
                 </div>
             </div>
@@ -110,9 +180,9 @@
                         window.sessionStorage.setItem('token', res.token);
 
                         let date = new Date();
-                        date.setDate(date.getDate() + 7); 
-                        document.cookie = `token=${res.token}; expires=${date.toUTCString()}; path=/`; 
-                        
+                        date.setDate(date.getDate() + 7);
+                        document.cookie = `token=${res.token}; expires=${date.toUTCString()}; path=/`;
+
                         setTimeout(() => {
                             this.loading = false;
                             window.location = 'http://localhost:8080/index';
@@ -127,75 +197,7 @@
         });
     </script>
 
-    <style>
-        .cross {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            animation: cross 10s linear infinite;
-            animation-delay: calc(-1s * var(--i)) !important;
-        }
 
-        @keyframes cross {
-
-            0%,
-            100% {
-                transform: translateY(-40px);
-            }
-
-            50% {
-                transform: translateY(30px);
-            }
-        }
-
-        .cross:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            top: -15px;
-            right: -45px;
-        }
-
-        .cross:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            top: 105px;
-            left: -125px;
-            z-index: 2;
-        }
-
-        .cross:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 85px;
-            right: -45px;
-            z-index: 2;
-        }
-
-        .cross:nth-child(4) {
-            width: 50px;
-            height: 50px;
-            bottom: 35px;
-            left: -95px;
-        }
-
-        .cross:nth-child(5) {
-            width: 50px;
-            height: 50px;
-            top: -15px;
-            left: -25px;
-        }
-
-        .cross:nth-child(6) {
-            width: 85px;
-            height: 85px;
-            top: 165px;
-            right: -155px;
-            z-index: 2;
-        }
-    </style>
 </body>
 
 </html>

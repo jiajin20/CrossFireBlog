@@ -1,11 +1,4 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2024-11-05 14:44:16
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-11-10 11:14:54
- * @FilePath: \statics\html\LoginReg.html
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!DOCTYPE html>
 <html>
 
@@ -56,15 +49,11 @@
     $(document).ready(function () {
         $('#loginForm').on('submit', function (event) {
             event.preventDefault(); // 阻止表单的默认提交行为
-
             const userid = $('input[placeholder="账号"]').val().trim();
-
             const nickname = $('input[placeholder="昵称"]').val().trim();
             const email = $('input[placeholder="邮箱"]').val().trim();
             const password = $('input[placeholder="请输入密码"]').val();
             const confirmPassword = $('input[placeholder="确认密码"]').val();
-
-            // 基本验证
             if (userid.length < 3) {
                 alert('用户名至少需要3个字符');
                 return;
@@ -85,31 +74,38 @@
                 return;
             }
 
-            // 构建用户数据对象
             const userData = {
-                account: userid ,
+                account: userid,
                 email: email,
                 nickname: nickname,
                 password: password
             };
 
-            // 使用 AJAX 向后端发送注册请求
-            $.ajax({
-                type: 'POST',
-                url: '/LoginReg',  // 后端注册接口地址
-                contentType: 'application/json',
-                data: JSON.stringify(userData),
-                success: function (response) {
-                    alert("注册成功"); // 注册成功提示
-                    window.location.href = '/login'; // 跳转到登录页面
+            fetch('/LoginReg', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                error: function (xhr) {
-                    alert(xhr.responseJSON.message); // 显示错误消息
-                }
-            });
+                body: JSON.stringify(userData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("注册成功");
+                    window.location.href = '/login';
+                })
+                .catch(error => {
+                    fetch('/LoginReg')
+                        .then(response => response.json())
+                        .then(data => alert(data.message))
+                        .catch(() => alert("发生了一个错误，请重试"));
+                });
         });
 
-        // 邮箱格式验证
         function validateEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);

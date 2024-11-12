@@ -1,11 +1,3 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2024-10-29 15:59:50
- * @LastEditors: jiajin20 3196117119@qq.com
- * @LastEditTime: 2024-11-11 18:32:12
- * @FilePath: \WebContentc:\JAVAprogram\innerExpress2.0\WebContent\statics\html\index.html
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,11 +6,10 @@
     <title>首页</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="/statics/css/global.css">
-    <link rel="stylesheet" href="/statics/css/indexs.css">
+    <link rel="stylesheet" href="/statics/css/index.css">
     <link rel="stylesheet" href="/statics/css/tab.css">
     <link rel="stylesheet" href="/statics/css/myPagination.css">
     <style>
-        /* 使页面高度为100%，容器使用flex布局 */
         body,
         html {
             margin: 0;
@@ -34,7 +25,6 @@
 
         #app {
             flex-grow: 1;
-            /* 使内容部分占据剩余空间 */
         }
 
         .footer {
@@ -43,7 +33,6 @@
             text-align: center;
             width: 100%;
             position: relative;
-            /* 默认位置，保持在底部 */
         }
 
         .footer-line {
@@ -53,34 +42,30 @@
 </head>
 
 <body>
-
     <div class="page-wrapper">
         <nav class="nav-bar-holder" id="nav">
             <div class="nav-bar" id="nav-bar">
                 <div class="logo-box">
-                    <a href="http://localhost:8080/index" class="blog-title ta-c"><img style="vertical-align: top;"
-                            alt="logo" src="/statics/images/logo.png" /></a>
+                    <a href="http://localhost:8080/index" class="blog-title ta-c">
+                        <img style="vertical-align: top;" alt="logo" src="/statics/images/logo.png" /></a>
                 </div>
-                <div class="nb-a-holder" id="home"><a id="active" class="nb-a ta-c" href="index">首页</a></div>
-                <div class="nb-a-holder"><a class="nb-a ta-c" href="/category.html">分类</a></div>
+                <div class="nb-a-holder" id="home">
+                    <a id="active" class="nb-a ta-c" href="index">首页</a>
+                </div>
+                <div class="nb-a-holder">
+                    <a class="nb-a ta-c" href="/category.html">分类</a>
+                </div>
                 <div class="nb-a-holder">
                     <a :href="'/personInfo/' + (personInfo.userId || '')" class="nb-a ta-c">个人信息</a>
                 </div>
-
                 <div class="nb-a-holder-last">
                     <div class="nb-a-holder-small">
                         <a class="a-login" @click="logout" style="cursor: pointer;">注销</a>
                     </div>
                 </div>
-
             </div>
         </nav>
-
         <div id="app">
-
-
-
-
             <el-container class="big-container" id="particles-js">
                 <div class="article">
                     <div id="article-holder" class="left-holder">
@@ -95,12 +80,12 @@
                                         </a>
                                         <div class="article-title">
                                             <a :href="'/blog/' + blog.blogId">
-                                             {{ blog.title || '暂无标题' }} 
-                                        </a>
+                                                {{ blog.title || '暂无标题' }}
+                                            </a>
                                         </div>
                                         <div class="article-detail-box c-666">
                                             <a :href="'/blog/' + blog.blogId">
-                                            {{ blog.content }}
+                                                {{ blog.content }}
                                             </a>
                                         </div>
                                         <span class="article-tail-box">
@@ -123,14 +108,12 @@
                             </div>
                             <div v-else>没有找到相关内容。</div>
                         </div>
-
                         <el-pagination class="pagination fl" id="pagination" v-if="pageParam.totalSize > 0"
                             :current-page="pageParam.current" :page-size="pageParam.size" :total="pageParam.totalNumber"
                             @current-change="handlePageChange" layout="total, prev, pager, next, jumper">
                         </el-pagination>
                     </div>
                     <div class="right-holder">
-                        <!-- 个人介绍和其他内容 -->
                         <div class="column-container">
                             <ul class="column_box" id="like-box">
                                 <li class="column-title">
@@ -165,12 +148,12 @@
                             <ul class="column_box" id="like-box">
                                 <li class="column-title">
                                     <span class=" at-sort b-b-ece fl">
-                                        <!-- 关注 -->
+
                                         <a class=" choose c-666 fl" :class="{ active: activeTab === 'followers' }"
                                             @click="activeTab = 'followers'">
                                             关注
                                         </a>
-                                        <!-- 粉丝 -->
+
                                         <a class="choose c-666 fl" :class="{ active: activeTab === 'followed' }"
                                             @click="activeTab = 'followed'">
                                             粉丝
@@ -180,7 +163,7 @@
                             </ul>
 
                             <div>
-                                <!-- 使用 v-if 判断当前是否为“关注”选项卡 -->
+
                                 <div v-if="activeTab === 'followers'" class="follow_box">
                                     <div class="column_box follow_box_box" id="like-box" v-for="follow in followers"
                                         :key="follow.userId" @click="userDetail(follow.userId)">
@@ -231,9 +214,6 @@
                             </div>
                         </div>
 
-
-
-
                         <div class="column-container">
                             <ul class="column_box" id="like-box">
                                 <li class="column-title">
@@ -242,17 +222,19 @@
                                     </span>
                                 </li>
                             </ul>
-                            <div v-for="(blog, index) in sortedBlogs" :key="blog.id"   >
+                            <div v-for="(blog, index) in sortedBlogs" :key="blog.id">
                                 <div class="article-box" style="width: 345px;overflow: hidden;">
                                     <div class="ab-content" style="width: 345px;overflow: hidden;">
                                         <div class="article-title">
-                                            <a style="font-size: 16px; width: 84% !important;">{{ blog.title || '暂无标题' }}</a>
+                                            <a style="font-size: 16px; width: 84% !important;">{{ blog.title || '暂无标题'
+                                                }}</a>
                                         </div>
                                         <span class="article-tail-box">
                                             <i class="fl"
                                                 style="background-image: url('/statics/images/looks.svg')"></i>
                                             <span class="read-number c-999 fl">{{ blog.readed }}</span>
-                                            <span class="article-author one-line-overflow c-999" style="margin-right: 50%;">{{ blog.authorName
+                                            <span class="article-author one-line-overflow c-999"
+                                                style="margin-right: 50%;">{{ blog.authorName
                                                 }}</span>
                                         </span>
                                     </div>
@@ -280,14 +262,11 @@
             </div>
 
 
-            <el-dialog :visible.sync="dialogVisible[0]" width="30%" >
+            <el-dialog :visible.sync="dialogVisible[0]" width="30%">
                 <p v-show="showError" style="color: red;">请输入关键字</p>
                 <div id="search" style="display: block;">
-                    <!-- 使用 flexbox 代替浮动布局 -->
                     <span class="search-s" style="display: flex; align-items: center;">
-                        <!-- el-input 提供了占位符功能，无需额外的 label -->
                         <el-input class="search-input" placeholder="请输入关键字" v-model="key" @keyup.enter="search">
-
                             <template #append>
                                 <a class="search-icon fl" @click="search" href="javascript:void(0);">
                                 </a>
@@ -296,7 +275,7 @@
                     </span>
                 </div>
             </el-dialog>
-           
+
 
             <el-dialog :visible.sync="dialogVisible[1]" width="30%">
                 <el-form ref="newBlog" :model="newBlog" label-width="160px" :rules="newBlogRules">
@@ -321,8 +300,6 @@
         </div>
 
 
-
-        <!-- Footer content -->
         <footer class="footer">
             <div class="footer-line">Powered By Cross Fire • © 2024</div>
         </footer>
@@ -332,8 +309,8 @@
     <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script type="text/javascript" src="/statics/js/js/sweetalert.min.js"></script>
-    <script type="text/javascript" src="/statics/js/js/pace.min.js"></script>
+    <script type="text/javascript" src="/statics/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/statics/js/pace.min.js"></script>
     <script src="/statics/js/request.js"></script>
     <script>
         new Vue({
@@ -355,56 +332,51 @@
                         typeId: [
                             { required: true, message: '请选择类型', trigger: 'blur' }
                         ],
-                        seach:{
-                            required: true, message: '请输入内容', trigger: 'blur' 
+                        seach: {
+                            required: true, message: '请输入内容', trigger: 'blur'
                         }
                     },
                     personInfo: { name: '', avatar: '/statics/images/18908.png' },
                     newBlog: { title: '', content: '', typeId: null },
-                    blogs: [],  // 博客列表
-                    pageParam: {  // 分页参数
+                    blogs: [],
+                    pageParam: {
                         current: 1,
                         size: 5,
                         totalSize: 0
                     },
-                    tags: [],  // 博客类型标签
-                    activeTab: 'followers',  // 当前活动标签（关注或粉丝）
-                    followers: [],  // 关注用户列表
-                    followed: [],  // 粉丝用户列表
-                    activeIndex: '0',  // 当前分类索引
-                    key: '',  // 搜索关键字
-                    dialogVisible: [false, false],  // 弹出框状态
-                    drawer: false  // 抽屉状态
+                    tags: [],
+                    activeTab: 'followers',
+                    followers: [],
+                    followed: [],
+                    activeIndex: '0',
+                    key: '',
+                    dialogVisible: [false, false],
+                    drawer: false
                 };
             },
 
             created() {
                 this.load();
-                this.initType();  // 初始化博客类型
-                this.initUser();  // 获取用户信息
-                this.initFollowers();  // 初始化关注列表
-                this.initFolloweds();  // 初始化粉丝列表
+                this.initType();
+                this.initUser();
+                this.initFollowers();
+                this.initFolloweds();
                 request.post('/followInfo', (res) => {
                     this.follow.userId = res.userId;
                 });
             },
             methods: {
-                // 分页事件处理
+
                 handlePageChange(page) {
                     this.pageParam.current = page;
-                    this.load();  // 加载新的页码的博客
+                    this.load();
                 },
 
                 onSubmitNew(form) {
                     this.$refs[form].validate((valid) => {
                         if (valid) {
-                            // 添加 author 字段
-                            this.newBlog.author = this.personInfo.userId;  // 如果 currentUser 为空，使用 '默认用户'
-
-                            // 设置默认值
+                            this.newBlog.author = this.personInfo.userId;
                             this.newBlog.readed = 0;
-
-                            // 发送请求
                             request.post("/addBlog", this.newBlog, (res) => {
                                 if (res) {
                                     this.$message("发布成功");
@@ -414,72 +386,60 @@
                         }
                     });
                 },
-
-                // 加载博客数据
                 load() {
                     const data = {
                         typeId: this.activeIndex === '0' ? undefined : this.activeIndex,
                         key: this.key.trim() || undefined
                     };
-                    console.log('Loading blogs with params:', this.pageParam, data);  // 打印分页参数
-                    this.initBlog(this.pageParam, data);  // 获取博客数据
+                    console.log('Loading blogs with params:', this.pageParam, data);
+                    this.initBlog(this.pageParam, data);
                 },
-
-                // 从服务器获取博客数据
                 async initBlog(params, data) {
                     const url = '/blogs';
                     await request.post(url, data, params, (res) => {
                         if (res && res.list) {
                             this.blogs = res.list;
-                            this.pageParam.totalSize = res.totalSize;  // 更新总条目数
-                            console.log('Total Size:', res.totalNumber);  // 检查总条目数
+                            this.pageParam.totalSize = res.totalSize;
+                            console.log('Total Size:', res.totalNumber);
                         }
                     });
                 },
 
-                // 初始化博客类型标签
                 async initType() {
                     await request.post("/types", (res) => { this.tags = res; });
                 },
 
-                // 获取用户信息
                 async initUser() {
                     await request.post("/personalInfomation", (res) => {
                         this.personInfo = res;
                     });
                 },
 
-                // 初始化关注列表
                 async initFollowers() {
                     await request.post("/followers", (res) => {
                         this.followers = res;
                     });
                 },
 
-                // 初始化粉丝列表
                 async initFolloweds() {
                     await request.post("/followeds", (res) => {
                         this.followed = res;
                     });
                 },
 
-                // 跳转到更多关注页面
                 followerMore() {
                     window.location = "/users/followers";
                 },
 
-                // 跳转到更多粉丝页面
                 followedMore() {
                     window.location = "/users/followed";
                 },
 
-                // 用户详情跳转
                 userDetail(id) {
                     console.log(id);
                     window.location = "/personInfo/" + id;
                 },
 
-                // 跳转到用户个人信息页
                 toPersonInfo() {
                     if (this.personInfo.userId) {
                         window.location = '/personInfo/' + this.personInfo.userId;
@@ -493,43 +453,42 @@
                     this.$set(this.dialogVisible, status, !this.dialogVisible[status]);
                 },
 
-                // 搜索功能处理
                 search() {
-        if (this.key.trim() === '') {
-            this.showError = true;  // 显示错误提示
-            setTimeout(() => {
-                this.showError = false;  // 延迟一段时间后自动隐藏错误提示
-            }, 2000);
-            return;
-        }
+                    if (this.key.trim() === '') {
+                        this.showError = true;
+                        setTimeout(() => {
+                            this.showError = false;
+                        }, 2000);
+                        return;
+                    }
 
-        this.showError = false;  // 隐藏错误提示
-        this.pageParam.current = 1;  // 重置页码为第一页
-        this.blogs = [];  // 清空当前博客列表
-        this.load();  // 加载数据
-        this.dialogVisible[0] = false;  // 关闭弹窗
-    },
+                    this.showError = false;
+                    this.pageParam.current = 1;
+                    this.blogs = [];
+                    this.load();
+                    this.dialogVisible[0] = false;
+                },
 
-                // 跳转到博客详情页
+
                 blogDetail(id) {
                     window.location = "/blog/" + id;
                 }
             },
 
             computed: {
-                // 计算属性来排序博客列表
+
                 sortedBlogs() {
                     if (!this.blogs || this.blogs.length === 0) {
-                        return [];  // 如果没有数据，返回空数组
+                        return [];
                     }
                     return this.blogs.sort((a, b) => b.readed - a.readed);
                 }
             },
 
             filters: {
-                // 日期格式化过滤器
+
                 dateFormate(date) {
-                    return date.substring(0, 10);  // 格式化日期为 'YYYY-MM-DD'
+                    return date.substring(0, 10);
                 }
             }
         });
@@ -556,8 +515,6 @@
                     document.cookie = `token=""; expires=${date.toUTCString()}`
                     window.location = "/login"
                 },
-
-
                 async initUser() {
                     await request.post("/personalInfomation", (res) => {
                         this.personInfo = res;
@@ -566,7 +523,6 @@
             }
         });
     </script>
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -610,7 +566,6 @@
         });
 
     </script>
-
 
 </body>
 
