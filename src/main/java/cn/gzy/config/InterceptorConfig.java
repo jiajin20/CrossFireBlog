@@ -12,9 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class InterceptorConfig implements WebMvcConfigurer {
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TokenIntercept())
-                .addPathPatterns("/**")
-                .excludePathPatterns("/*.html","/login","/login.html","/LoginReg.html","/LoginReg","/index1.html,/index1,/category.html");
-    }
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new TokenIntercept())
+            .addPathPatterns("/**")
+            .excludePathPatterns("/*.html","/login","/login.html","/LoginReg.html","/LoginReg","/index1.html,/index1,/category.html");
+}
 }
